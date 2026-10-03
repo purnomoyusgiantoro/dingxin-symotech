@@ -45,12 +45,19 @@ class DriverAuthController extends Controller
         $loginInput = trim($request->input('login'));
         $password = $request->input('password');
 
-        // Cari berdasarkan username di tabel users
-        $user = User::where('username', $loginInput)->first();
+        // Convenience alias: ketik "sopir" otomatis login ke TGL1.2
+        if (strtolower($loginInput) === 'sopir') {
+            $loginInput = 'TGL1.2';
+        }
+
+        // Cari berdasarkan username di tabel users (case-insensitive)
+        $user = User::whereRaw('LOWER(username) = ?', [strtolower($loginInput)])
+            ->orWhereRaw('LOWER(email) = ?', [strtolower($loginInput)])
+            ->first();
 
         // Jika tidak ditemukan, cari berdasarkan driver_code di tabel drivers
         if (!$user) {
-            $driver = Driver::where('driver_code', $loginInput)->first();
+            $driver = Driver::whereRaw('LOWER(driver_code) = ?', [strtolower($loginInput)])->first();
             if ($driver) {
                 $user = $driver->user;
             }
@@ -84,12 +91,12 @@ class DriverAuthController extends Controller
                 ]);
             }
 
-            return redirect()->intended(route('driver.dashboard'))
+            return redirect()->route('driver.dashboard')
                 ->with('success', 'Selamat datang kembali, ' . ($user->driver->driver_code ?? $user->name) . '!');
         }
 
         // Jika role admin / sales_admin / cashier / gm, arahkan ke /admin
-        return redirect()->intended('/admin');
+        return redirect('/admin');
     }
 
     /**

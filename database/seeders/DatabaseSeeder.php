@@ -47,7 +47,18 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 3. Admin Penjualan (admin1, admin2, admin3)
+        // 3. Admin Penjualan (admin, admin1, admin2, admin3)
+        User::updateOrCreate(
+            ['username' => 'admin'],
+            [
+                'name' => 'Admin Penjualan Utama',
+                'email' => 'admin@symotech.web.id',
+                'password' => $password,
+                'role' => 'sales_admin',
+                'is_active' => true,
+            ]
+        );
+
         $admins = [];
         foreach ([1, 2, 3] as $num) {
             $admins[$num] = User::updateOrCreate(

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Login Driver - Dingxin Distribution</title>
+    <title>Login - Dingxin Symotech Distribution</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -42,8 +42,8 @@
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-500 shadow-xl shadow-brand-500/20 text-white font-extrabold text-2xl tracking-tight">
                 DX
             </div>
-            <h1 class="text-2xl font-bold text-white tracking-tight">Portal Armada Sopir</h1>
-            <p class="text-sm text-slate-400">Sistem Distribusi & Settlement Dingxin</p>
+            <h1 class="text-2xl font-bold text-white tracking-tight">Dingxin Symotech Portal</h1>
+            <p class="text-sm text-slate-400">Portal Distribusi Sopir & Operasional Setoran</p>
         </div>
 
         <!-- Login Card -->
@@ -60,6 +60,13 @@
                 <div class="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center space-x-2">
                     <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 text-rose-400"></i>
                     <span>{{ session('error') }}</span>
+                </div>
+            @endif
+
+            @if (session('warning'))
+                <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex items-center space-x-2">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0 text-amber-400"></i>
+                    <span>{{ session('warning') }}</span>
                 </div>
             @endif
 
@@ -83,11 +90,11 @@
                 <!-- Input Kode Sopir / Username -->
                 <div>
                     <label for="login" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Kode Sopir / Username
+                        Username / Kode Sopir
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                            <i data-lucide="truck" class="w-5 h-5"></i>
+                            <i data-lucide="user-check" class="w-5 h-5"></i>
                         </div>
                         <input type="text" 
                                id="login" 
@@ -96,7 +103,7 @@
                                required 
                                autocomplete="username"
                                autofocus
-                               placeholder="Contoh: TGL1.2 atau BRS1.2" 
+                               placeholder="TGL1.2 / kasir / admin1 / gm" 
                                class="w-full pl-11 pr-4 py-3 bg-slate-900/90 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition">
                     </div>
                 </div>
@@ -128,7 +135,7 @@
                 <!-- Remember Me -->
                 <div class="flex items-center justify-between text-xs pt-1">
                     <label class="flex items-center space-x-2 text-slate-300 cursor-pointer">
-                        <input type="checkbox" name="remember" class="w-4 h-4 rounded bg-slate-900 border-slate-700 text-brand-600 focus:ring-brand-500 focus:ring-offset-slate-800">
+                        <input type="checkbox" name="remember" checked class="w-4 h-4 rounded bg-slate-900 border-slate-700 text-brand-600 focus:ring-brand-500 focus:ring-offset-slate-800">
                         <span>Ingat saya di perangkat ini</span>
                     </label>
                 </div>
@@ -137,14 +144,41 @@
                 <button type="submit" 
                         class="w-full py-3.5 px-4 bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-500 hover:to-blue-500 active:scale-[0.99] text-white font-semibold text-sm rounded-xl shadow-lg shadow-brand-600/30 flex items-center justify-center space-x-2 transition cursor-pointer">
                     <i data-lucide="log-in" class="w-4 h-4"></i>
-                    <span>Masuk ke Portal</span>
+                    <span>Masuk ke Akun</span>
                 </button>
             </form>
 
-            <div class="border-t border-slate-700/60 pt-4 text-center">
-                <p class="text-xs text-slate-400">
-                    Bantuan / kendala akun? Hubungi <span class="text-slate-300 font-medium">Kasir / Sales Admin</span>
-                </p>
+            <!-- Quick Demo Credentials Helper -->
+            <div class="border-t border-slate-700/60 pt-4 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Isi Cepat Akun Demo:</span>
+                    <span class="text-[11px] text-slate-500">Pass: <code class="text-slate-300">password</code></span>
+                </div>
+                <div class="flex flex-wrap gap-1.5 text-xs">
+                    <button type="button" onclick="fillAccount('TGL1.2', 'password')" class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-[11px] font-medium transition cursor-pointer">
+                        🚚 Sopir TGL1.2
+                    </button>
+                    <button type="button" onclick="fillAccount('BRS1.2', 'password')" class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-[11px] font-medium transition cursor-pointer">
+                        🚚 Sopir BRS1.2
+                    </button>
+                    <button type="button" onclick="fillAccount('kasir', 'password')" class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-[11px] font-medium transition cursor-pointer">
+                        💵 Kasir
+                    </button>
+                    <button type="button" onclick="fillAccount('admin1', 'password')" class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-[11px] font-medium transition cursor-pointer">
+                        📦 Admin 1
+                    </button>
+                    <button type="button" onclick="fillAccount('gm', 'password')" class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-[11px] font-medium transition cursor-pointer">
+                        👑 GM
+                    </button>
+                </div>
+            </div>
+
+            <!-- Link to Filament Panel -->
+            <div class="border-t border-slate-700/60 pt-3 text-center">
+                <a href="/admin/login" class="inline-flex items-center space-x-1.5 text-xs text-brand-400 hover:text-brand-300 font-medium transition">
+                    <span>Akses Panel Admin / Kasir / GM Langsung</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
             </div>
         </div>
 
@@ -168,6 +202,11 @@
                 eyeIcon.setAttribute('data-lucide', 'eye');
             }
             lucide.createIcons();
+        }
+
+        function fillAccount(username, password) {
+            document.getElementById('login').value = username;
+            document.getElementById('password').value = password;
         }
     </script>
 </body>
