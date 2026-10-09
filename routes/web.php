@@ -14,10 +14,10 @@ Route::get('/', function () {
     return redirect()->route('driver.login');
 });
 
-// Autentikasi Khusus Sopir
-Route::get('/login', [DriverAuthController::class, 'showLoginForm'])->name('login');
+// Autentikasi Terpadu (Satu Halaman Resmi Putih Polos: /admin/login)
+Route::get('/login', fn () => redirect('/admin/login'))->name('login');
+Route::get('/driver/login', fn () => redirect('/admin/login'))->name('driver.login');
 Route::post('/login', [DriverAuthController::class, 'login'])->name('login.post');
-Route::get('/driver/login', [DriverAuthController::class, 'showLoginForm'])->name('driver.login');
 Route::post('/driver/login', [DriverAuthController::class, 'login'])->name('driver.login.post');
 Route::post('/driver/logout', [DriverAuthController::class, 'logout'])->name('driver.logout');
 Route::post('/logout', [DriverAuthController::class, 'logout'])->name('logout');

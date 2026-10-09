@@ -4,26 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Portal Sopir') - Dingxin Distribution</title>
+    <title>@yield('title', 'Portal Sopir') - Dingxin</title>
 
-    <!-- Tailwind CSS CDN with typography and forms -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#2563eb',
-                            600: '#1d4ed8',
-                            700: '#1e40af',
-                            800: '#1e3a8a',
-                            900: '#0f172a',
-                        }
-                    },
                     fontFamily: {
                         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
                     }
@@ -33,7 +21,7 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -43,78 +31,74 @@
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-        /* Mobile safe-area padding for modern devices */
         .pb-safe {
             padding-bottom: env(safe-area-inset-bottom, 1rem);
         }
     </style>
     @stack('styles')
 </head>
-<body class="flex flex-col min-h-screen text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
+<body class="flex flex-col min-h-screen bg-slate-50 text-slate-900 antialiased">
 
-    <!-- Top App Bar (Sticky Mobile Header) -->
-    <header class="sticky top-0 z-30 bg-slate-900 text-white shadow-md border-b border-slate-800">
-        <div class="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
+    <!-- Header Bersih & Jelas -->
+    <header class="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-lg mx-auto px-4 h-15 py-2.5 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-blue-400 flex items-center justify-center font-black text-white text-base shadow">
+                <div class="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center font-bold text-white text-sm shadow-sm shrink-0">
                     DX
                 </div>
                 <div>
-                    <h1 class="text-xs font-semibold text-slate-400 uppercase tracking-wider leading-tight">Dingxin Portal</h1>
-                    <div class="flex items-center space-x-1.5">
-                        <span class="text-sm font-bold text-white tracking-wide">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-base font-bold text-slate-900 tracking-tight">
                             {{ Auth::user()->driver->driver_code ?? Auth::user()->username }}
                         </span>
-                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                            Aktif
+                        <span class="text-xs px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-semibold border border-slate-200">
+                            Area {{ Auth::user()->driver->area_code ?? '-' }}
                         </span>
                     </div>
+                    <p class="text-xs text-slate-500 truncate max-w-[180px] sm:max-w-xs">{{ Auth::user()->name }}</p>
                 </div>
             </div>
 
-            <!-- Profile & Area -->
-            <div class="flex items-center space-x-2">
-                <div class="text-right hidden sm:block">
-                    <div class="text-xs font-semibold text-white">{{ Auth::user()->name }}</div>
-                    <div class="text-[10px] text-slate-400">Area: {{ Auth::user()->driver->area_code ?? '-' }}</div>
-                </div>
-
-                <!-- Logout Trigger -->
-                <form action="{{ route('driver.logout') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin keluar?');">
-                    @csrf
-                    <button type="submit" class="p-2 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition" title="Logout">
-                        <i data-lucide="log-out" class="w-5 h-5"></i>
-                    </button>
-                </form>
-            </div>
+            <!-- Tombol Keluar (Jelas dengan teks) -->
+            <form action="{{ route('driver.logout') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin keluar dari sistem?');">
+                @csrf
+                <button type="submit" 
+                        class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition" 
+                        title="Keluar dari sistem">
+                    <i data-lucide="log-out" class="w-4 h-4 text-slate-600"></i>
+                    <span>Keluar</span>
+                </button>
+            </form>
         </div>
     </header>
 
-    <!-- Main Container (Limited to mobile-friendly width) -->
-    <main class="flex-1 w-full max-w-lg mx-auto px-4 py-4 mb-20">
+    <!-- Konten Utama Halaman -->
+    <main class="flex-1 w-full max-w-lg mx-auto px-4 py-4 mb-24">
 
-        <!-- Notification Alerts -->
+        <!-- Pesan Berhasil -->
         @if (session('success'))
-            <div class="mb-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm flex items-start space-x-2.5 shadow-sm animate-fade-in">
+            <div class="mb-4 p-3.5 rounded-xl bg-white border-2 border-slate-900 text-slate-900 text-sm flex items-start space-x-2.5 shadow-sm">
                 <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i>
-                <div class="font-medium flex-1">{{ session('success') }}</div>
+                <div class="font-semibold flex-1">{{ session('success') }}</div>
             </div>
         @endif
 
+        <!-- Pesan Peringatan / Error -->
         @if (session('error'))
-            <div class="mb-4 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-start space-x-2.5 shadow-sm">
+            <div class="mb-4 p-3.5 rounded-xl bg-white border-2 border-rose-600 text-rose-900 text-sm flex items-start space-x-2.5 shadow-sm">
                 <i data-lucide="alert-circle" class="w-5 h-5 text-rose-600 shrink-0 mt-0.5"></i>
-                <div class="font-medium flex-1">{{ session('error') }}</div>
+                <div class="font-semibold flex-1">{{ session('error') }}</div>
             </div>
         @endif
 
+        <!-- Pesan Validasi Form -->
         @if ($errors->any())
-            <div class="mb-4 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm space-y-1 shadow-sm">
-                <div class="font-semibold flex items-center space-x-1.5 text-rose-700">
-                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-                    <span>Terdapat kesalahan input:</span>
+            <div class="mb-4 p-3.5 rounded-xl bg-white border-2 border-rose-500 text-rose-900 text-sm space-y-1 shadow-sm">
+                <div class="font-bold flex items-center space-x-1.5">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600"></i>
+                    <span>Periksa kembali isian Anda:</span>
                 </div>
-                <ul class="list-disc list-inside text-rose-600 pl-1 space-y-0.5">
+                <ul class="list-disc list-inside text-rose-800 pl-1 space-y-0.5 font-medium text-xs">
                     @foreach ($errors->all() as $err)
                         <li>{{ $err }}</li>
                     @endforeach
@@ -125,40 +109,40 @@
         @yield('content')
     </main>
 
-    <!-- Bottom Navigation Bar (Mobile Native App Style) -->
-    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg pb-safe">
-        <div class="max-w-lg mx-auto px-6 h-16 flex items-center justify-between">
-            <!-- Beranda / Dashboard -->
+    <!-- Navigasi Bawah Rapi & Mudah Dipencet -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-md pb-safe">
+        <div class="max-w-lg mx-auto px-4 h-16 flex items-center justify-between">
+            <!-- Beranda -->
             <a href="{{ route('driver.dashboard') }}" 
-               class="flex flex-col items-center justify-center flex-1 py-1 transition group {{ request()->routeIs('driver.dashboard') ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                <i data-lucide="home" class="w-5 h-5 mb-1 transition-transform group-active:scale-90"></i>
-                <span class="text-[11px]">Beranda</span>
+               class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.dashboard') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
+                <i data-lucide="home" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-xs">Beranda</span>
             </a>
 
-            <!-- Input Transfer -->
+            <!-- + Transfer -->
             <a href="{{ route('driver.transfer.create') }}" 
-               class="flex flex-col items-center justify-center flex-1 py-1 transition group {{ request()->routeIs('driver.transfer.*') ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                <i data-lucide="arrow-up-right" class="w-5 h-5 mb-1 transition-transform group-active:scale-90"></i>
-                <span class="text-[11px]">+ Transfer</span>
+               class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.transfer.*') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
+                <i data-lucide="credit-card" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-xs">+ Transfer</span>
             </a>
 
-            <!-- Input Kredit -->
+            <!-- + Kredit -->
             <a href="{{ route('driver.credit.create') }}" 
-               class="flex flex-col items-center justify-center flex-1 py-1 transition group {{ request()->routeIs('driver.credit.*') ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                <i data-lucide="file-text" class="w-5 h-5 mb-1 transition-transform group-active:scale-90"></i>
-                <span class="text-[11px]">+ Kredit</span>
+               class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.credit.*') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
+                <i data-lucide="file-text" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-xs">+ Bon Kredit</span>
             </a>
 
             <!-- Riwayat -->
             <a href="{{ route('driver.history') }}" 
-               class="flex flex-col items-center justify-center flex-1 py-1 transition group {{ request()->routeIs('driver.history') ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                <i data-lucide="history" class="w-5 h-5 mb-1 transition-transform group-active:scale-90"></i>
-                <span class="text-[11px]">Riwayat</span>
+               class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.history') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
+                <i data-lucide="history" class="w-5 h-5 mb-0.5"></i>
+                <span class="text-xs">Riwayat</span>
             </a>
         </div>
     </nav>
 
-    <!-- Init Lucide Icons -->
+    <!-- Inisialisasi Ikon Lucide -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();

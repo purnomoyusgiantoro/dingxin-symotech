@@ -27,8 +27,8 @@ Dokumen ini berfungsi sebagai **Persistent Project Memory** untuk sistem manajem
 | :--- | :--- | :--- | :--- |
 | **Sopir (Driver)** | `TGL1.2` s/d `TGL13.14`<br>`BRS1.2` s/d `BRS13.14`<br>*(Alias: `sopir`)* | `/driver` (Portal Mobile) | • Input transfer pembayaran toko (nama toko, nominal, bukti foto opsional)<br>• Input faktur kredit toko (nama toko, nominal, **foto faktur wajib**)<br>• Dashboard metrik keuangan harian (terisolasi 100% pada data dirinya sendiri) |
 | **Admin Penjualan** | `admin`, `admin1`, `admin2`, `admin3` | `/admin` (Filament Panel) | • Input bawaan harian sopir dalam Rupiah (manual / upload file Excel)<br>• Input barang kembali (retur) per sopir<br>• Master data armada sopir |
-| **Kasir** | `kasir` | `/admin` (Filament Panel) | • Verifikasi & konfirmasi pembayaran transfer (Approve dengan penyesuaian mutasi / Reject dengan alasan)<br>• Menu Setoran All Sopir + input setoran tunai kasir (multi-tahap)<br>• Rekapitulasi dengan **Baris All Setor** |
-| **GM (Administrator)**| `gm` | `/admin` (Filament Panel) | • Akses menyeluruh (*Full Access*) ke seluruh resource, log, dan rekapitulasi |
+| **Kasir** | `kasir` | `/admin` (Filament Panel) | • Verifikasi & konfirmasi pembayaran transfer (Approve dengan penyesuaian mutasi / Reject dengan alasan)<br>• Menu Setoran All Sopir + input setoran tunai kasir (multi-tahap)<br>• Modal inspeksi rincian setoran per sopir<br>• Rekapitulasi dengan **Baris All Setor**<br>• Export Rekapitulasi Setoran ke format Excel (.xlsx) |
+| **GM (Administrator)**| `gm` | `/admin` (Filament Panel) | • Akses menyeluruh (*Full Access*) ke seluruh resource dan rekapitulasi<br>• **Executive Dashboard Widget**: Ringkasan armada aktif, total muatan, uang masuk, dan selisih harian<br>• **Wewenang Eksklusif Koreksi Setoran**: Satu-satunya role yang berhak membatalkan/menghapus setoran kasir<br>• Export Rekapitulasi Setoran ke Excel (.xlsx) |
 
 > **Password Default Seluruh Akun**: `password`
 
@@ -82,13 +82,12 @@ Tersedia tombol download template Excel resmi langsung pada action panel `DailyD
 
 ---
 
-## 🔐 Arsitektur Autentikasi Multi-Portal (Universal Cross-Login)
-1. **Portal Login Terpadu**:
-   - `/login` (Tampilan Mobile Portal Sopir dengan Tombol Demo Quick-Fill)
-   - `/admin/login` (Panel Filament Admin dengan Cheatsheet Kredensial)
+## 🔐 Arsitektur Autentikasi Tunggal Terpadu (Unified Clean White Login)
+1. **Satu Pintu Masuk Resmi Putih Polos**:
+   - Akses `/login` maupun `/admin/login` menyajikan antarmuka **putih polos minimalis** yang seragam, bersih, dan profesional tanpa teks contekan atau tombol demo yang mengganggu.
 2. **Auto-Redirection Cerdas**:
-   - Sopir login di `/admin/login` $\rightarrow$ otomatis diarahkan ke `/driver`.
-   - Kasir / Admin / GM login di `/login` $\rightarrow$ otomatis diarahkan ke `/admin`.
+   - Sopir login $\rightarrow$ otomatis diarahkan ke portal mobile `/driver`.
+   - Kasir / Admin / GM login $\rightarrow$ otomatis diarahkan ke panel manajemen `/admin`.
 3. **Pencarian Akun Fleksibel**:
    - Mendukung username huruf besar/kecil (`tgl1.2` atau `TGL1.2`).
    - Mendukung login menggunakan email atau kode armada.
@@ -109,13 +108,43 @@ Tersedia tombol download template Excel resmi langsung pada action panel `DailyD
 
 ---
 
+## 📱 Antarmuka Portal Sopir Bersih & Ramah Lansia (Clean & Senior-Friendly)
+Layanan tampilan sopir (`resources/views/driver/*`):
+- **Prinsip Desain**: Bersih tanpa informasi tambahan berlebih (*zero clutter*), kontras tinggi, proporsional, ramah pengguna berusia lanjut (*elderly-friendly UX*), dan mudah dioperasikan dengan jempol tangan di smartphone.
+- **Standar Proporsi & Tipografi**:
+  - Ukuran font proporsional standar (15-16px untuk label form & teks baca, 20-28px monospace untuk angka nominal uang).
+  - Tombol aksi utama dengan tinggi standar ergonomis (48-52px), tidak terlalu raksasa agar tetap rapi, modern, dan bagus dipandang.
+  - Hapus seluruh elemen dekoratif yang mengganggu (animasi pulsing dot, teks jargon berbelit, sub-label ganda).
+- **Palet Warna**:
+  1. **Putih Bersih (`#FFFFFF`) / Slate Lembut (`#F8FAFC`)**: Latar belakang aplikasi, kartu informasi, formulir input.
+  2. **Dark Slate (`#0F172A`)**: Header minimalis, tombol aksi utama, badge status tegas, dan angka penting.
+- **Pemisahan Tegas UI vs. Logika**:
+  - Seluruh `id` & `name` input (`claimed_amount_display`, `claimed_amount`, `amount_display`, `amount`, `proof_image`, `invoice_photo`, `notes`, `store_name`) dan JavaScript sinkronisasi Rupiah dipertahankan 100%.
+  - Seluruh suite pengujian otomatis PHPUnit (25/25) dan Playwright E2E browser (20/20) terverifikasi lulus 100%.
+
+---
+
+## 🖥️ Panel Kasir & Rekapitulasi Setoran Harian All Sopir
+Halaman: [`resources/views/filament/pages/daily-settlement-summary.blade.php`](file:///D:/Documents/symotech_projek/dingxin_symotech/resources/views/filament/pages/daily-settlement-summary.blade.php)
+- **3 Kartu Ringkasan Eksekutif (Stats Overview)**:
+  - Disusun menggunakan grid 3 kolom (`.settlement-overview-grid`) dengan struktur *Header (Judul + Ikon)* di baris atas dan *Angka Nilai Monospace* di baris bawah.
+  - Tipografi seimbang dengan `white-space: nowrap`, menjamin angka (`Rp 19.000.000` / `[KURANG] Rp 3.000.000`) tidak pernah patah ke baris kedua pada resolusi laptop (1366x768 & 1280x800).
+- **Tabel Rekapitulasi Sopir & Scroll Kontainer**:
+  - Diberikan jarak pemisah yang nyaman (`margin-top: 1.5rem`) dari kartu ringkasan.
+  - Setiap sel tabel (`th` dan `td`) memiliki padding nyaman (`0.85rem 1rem`) dengan `white-space: nowrap !important` dan pembatas baris halus (`border-bottom: 1px solid #f1f5f9`).
+  - Dilengkapi scrollbar horizontal elegan dan badge petunjuk visual interaktif: `↔ Geser tabel untuk kolom Status & Aksi`.
+  - Kolom *Transfer Conf.* menampilkan badge pill rapi untuk pending (`+ Pnd: Rp ...`) dalam satu baris.
+  - Kolom *Aksi Kasir* dilengkapi tombol input setor biru tebal dengan modal Livewire multi-setor yang aman dan teruji.
+
+---
+
 ## 🛠️ Perintah Operasional & Pengujian
 
 ```bash
 # Menjalankan server lokal
 php artisan serve --port=8000
 
-# Menjalankan seluruh automated test suite (22 tests passing)
+# Menjalankan seluruh automated test suite (25 tests passing, 150 assertions)
 php artisan test
 
 # Menjalankan database migration & sample seed
@@ -123,4 +152,9 @@ php artisan migrate:fresh --seed
 
 # Memastikan symlink storage gambar aktif
 php artisan storage:link
+
+# Menjalankan automated Playwright browser E2E test suite lintas seluruh akun (20 skenario 100% pass)
+uv run --with playwright python -u tests/E2E/test_master_web_e2e.py
 ```
+
+

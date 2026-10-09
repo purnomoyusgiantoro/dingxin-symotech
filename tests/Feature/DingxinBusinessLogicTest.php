@@ -247,4 +247,60 @@ class DingxinBusinessLogicTest extends TestCase
             unlink($tempPath);
         }
     }
+
+    public function test_gm_exclusive_delete_deposit_permission(): void
+    {
+        $today = Carbon::today()->format('Y-m-d');
+        $driver = Driver::firstOrFail();
+        $cashier = User::where('role', 'cashier')->firstOrFail();
+        $gm = User::where('role', 'gm')->firstOrFail();
+
+        $deposit = CashDeposit::create([
+            'driver_id' => $driver->id,
+            'date' => $today,
+            'amount_received' => 2000000,
+            'deposit_phase' => '1',
+            'cashier_id' => $cashier->id,
+        ]);
+
+        $page = new \App\Filament\Pages\DailySettlementSummary();
+        $page->selectedDate = $today;
+
+        // 1. Kasir mencoba menghapus setoran -> harus ditolak
+        $this->actingAs($cashier);
+        $page->deleteDeposit($deposit->id);
+        $this->assertDatabaseHas('cash_deposits', ['id' => $deposit->id]);
+
+        // 2. GM menghapus setoran -> harus berhasil
+        $this->actingAs($gm);
+        $page->deleteDeposit($deposit->id);
+        $this->assertDatabaseMissing('cash_deposits', ['id' => $deposit->id]);
+    }
+
+    public function test_export_excel_rekapitulasi_setoran(): void
+    {
+        $today = Carbon::today()->format('Y-m-d');
+        $gm = User::where('role', 'gm')->firstOrFail();
+        $this->actingAs($gm);
+
+        $page = new \App\Filament\Pages\DailySettlementSummary();
+        $page->selectedDate = $today;
+
+        $response = $page->exportExcel();
+
+        $this->assertInstanceOf(\Symfony\Component\HttpFoundation\StreamedResponse::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function test_gm_executive_dashboard_widget_visibility_and_stats(): void
+    {
+        $cashier = User::where('role', 'cashier')->firstOrFail();
+        $gm = User::where('role', 'gm')->firstOrFail();
+
+        $this->actingAs($cashier);
+        $this->assertFalse(\App\Filament\Widgets\GmExecutiveDashboard::canView());
+
+        $this->actingAs($gm);
+        $this->assertTrue(\App\Filament\Widgets\GmExecutiveDashboard::canView());
+    }
 }

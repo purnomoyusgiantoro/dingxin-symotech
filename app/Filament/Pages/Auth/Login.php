@@ -24,28 +24,12 @@ class Login extends BaseLogin
 
     public function getHeading(): string | Htmlable
     {
-        return 'Dingxin Symotech Portal';
+        return 'Dingxin Symotech';
     }
 
     public function getSubheading(): string | Htmlable | null
     {
-        return new HtmlString(
-            '<div class="text-xs text-gray-500 dark:text-gray-400 space-y-2 mt-1">' .
-            '<div>Portal Operasional Distribusi, Kasir, & Manajemen</div>' .
-            '<div class="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-[11px] leading-relaxed border border-gray-200 dark:border-gray-700 text-left">' .
-            '<div class="font-semibold text-gray-700 dark:text-gray-200 mb-1">Daftar Akun Login (Password: <code>password</code>):</div>' .
-            '<div class="grid grid-cols-2 gap-1 text-[11px]">' .
-            '<div>&bull; Kasir: <strong class="text-primary-600 dark:text-primary-400">kasir</strong></div>' .
-            '<div>&bull; Admin: <strong class="text-primary-600 dark:text-primary-400">admin</strong> / <strong>admin1</strong></div>' .
-            '<div>&bull; GM: <strong class="text-primary-600 dark:text-primary-400">gm</strong></div>' .
-            '<div>&bull; Sopir: <strong class="text-primary-600 dark:text-primary-400">TGL1.2</strong> / <strong>BRS1.2</strong></div>' .
-            '</div>' .
-            '<div class="mt-2 pt-1.5 border-t border-gray-200 dark:border-gray-700 text-gray-400 text-[10px]">' .
-            'Sopir armada dapat juga login via <a href="/login" class="text-primary-600 dark:text-primary-400 underline font-medium">Portal Sopir Mobile</a>' .
-            '</div>' .
-            '</div>' .
-            '</div>'
-        );
+        return 'Silakan masukkan kredensial untuk mengakses sistem';
     }
 
     protected function getAuthenticateFormAction(): Action
