@@ -10,7 +10,7 @@
         <a href="{{ route('driver.dashboard') }}" 
            class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition shadow-sm"
            title="Kembali ke Beranda">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <x-app-icon name="actions.arrow-left" class="w-5 h-5 text-slate-700" />
         </a>
         <div>
             <h2 class="text-base font-bold text-slate-900">Catat Transfer Toko</h2>
@@ -87,7 +87,7 @@
 
                     <div id="uploadPlaceholder" class="space-y-2 py-2">
                         <div class="w-10 h-10 mx-auto rounded-full bg-slate-200 text-slate-800 flex items-center justify-center">
-                            <i data-lucide="camera" class="w-5 h-5"></i>
+                            <x-app-icon name="actions.camera" class="w-5 h-5 text-slate-800" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-slate-900">Ketuk untuk Ambil Foto / Pilih Gambar</p>
@@ -126,7 +126,7 @@
             <div class="pt-2">
                 <button type="submit" 
                         class="w-full py-3.5 px-4 bg-slate-900 hover:bg-black active:scale-[0.99] text-white font-bold text-sm rounded-xl shadow-sm flex items-center justify-center space-x-2 transition cursor-pointer">
-                    <i data-lucide="send" class="w-4 h-4"></i>
+                    <x-app-icon name="actions.send" class="w-4 h-4 text-white" />
                     <span>Kirim Bukti Transfer</span>
                 </button>
             </div>

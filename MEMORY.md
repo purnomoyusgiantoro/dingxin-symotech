@@ -124,6 +124,19 @@ Layanan tampilan sopir (`resources/views/driver/*`):
 
 ---
 
+## 🎨 Sistem Aset Ikon Vektor Lokal (Self-Hosted SVG Icon System)
+- **Struktur Direktori**: Tersimpan langsung di direktori publik `public/icons/` terbagi rapi berdasarkan kategori penggunaan:
+  - `public/icons/nav/`: `home.svg`, `transfer.svg`, `credit.svg`, `history.svg`, `logout.svg`
+  - `public/icons/actions/`: `plus-circle.svg`, `file-plus.svg`, `camera.svg`, `send.svg`, `check-square.svg`, `arrow-left.svg`, `eye.svg`, `search.svg`
+  - `public/icons/status/`: `success.svg`, `warning.svg`, `danger.svg`, `info.svg`
+  - `public/icons/types/`: `truck.svg`, `return.svg`, `bank.svg`, `receipt.svg`, `cash.svg`, `calendar.svg`, `inbox.svg`
+- **Blade Component Khusus**: [`resources/views/components/app-icon.blade.php`](file:///D:/Documents/symotech_projek/dingxin_symotech/resources/views/components/app-icon.blade.php)
+  - Menggunakan tag `<x-app-icon name="category.name" class="..." />` (penamaan `app-icon` dipilih secara spesifik untuk menghindari tabrakan nama dengan `blade-ui-kit/blade-icons` pada Filament).
+  - Merender SVG inline secara otomatis sehingga mendukung styling warna Tailwind (`text-slate-700`, `text-emerald-600`, dll) dan ukuran responsif (`w-4 h-4`, `w-5 h-5`).
+  - **Zero External CDN Dependency**: Bebas dari ketergantungan script CDN eksternal (`unpkg.com/lucide`), instan di-render, tajam di semua densitas layar HP sopir, dan 100% aman saat koneksi internet sopir sedang lambat di lapangan.
+
+---
+
 ## 🖥️ Panel Kasir & Rekapitulasi Setoran Harian All Sopir
 Halaman: [`resources/views/filament/pages/daily-settlement-summary.blade.php`](file:///D:/Documents/symotech_projek/dingxin_symotech/resources/views/filament/pages/daily-settlement-summary.blade.php)
 - **3 Kartu Ringkasan Eksekutif (Stats Overview)**:
@@ -131,7 +144,7 @@ Halaman: [`resources/views/filament/pages/daily-settlement-summary.blade.php`](f
   - Tipografi seimbang dengan `white-space: nowrap`, menjamin angka (`Rp 19.000.000` / `[KURANG] Rp 3.000.000`) tidak pernah patah ke baris kedua pada resolusi laptop (1366x768 & 1280x800).
 - **Tabel Rekapitulasi Sopir & Scroll Kontainer**:
   - Diberikan jarak pemisah yang nyaman (`margin-top: 1.5rem`) dari kartu ringkasan.
-  - Setiap sel tabel (`th` dan `td`) memiliki padding nyaman (`0.85rem 1rem`) dengan `white-space: nowrap !important`, pembatas baris horizontal (`border-bottom`), dan **garis pemisah vertikal antar kolom (`border-right: 1px solid #e2e8f0`)** sehingga batas kolom angka sangat tegas, rapi, dan mudah dibaca.
+  - Setiap sel tabel (`th` dan `td`) memiliki padding nyaman (`0.85rem 1rem`) dengan `white-space: nowrap !important`, pembatas baris horizontal (`border-bottom`), dan **garis pemisah vertikal antar kolom (`border-right: 1px solid #e2e8f0` / dark: `border-slate-700`)** sehingga batas kolom angka sangat tegas, rapi, dan mudah dibaca tanpa saling tumpang tindih.
   - Dilengkapi scrollbar horizontal elegan dan badge petunjuk visual interaktif: `↔ Geser tabel untuk kolom Status & Aksi`.
   - Kolom *Transfer Conf.* menampilkan badge pill rapi untuk pending (`+ Pnd: Rp ...`) dalam satu baris.
   - Kolom *Aksi Kasir* dilengkapi tombol input setor biru tebal dengan modal Livewire multi-setor yang aman dan teruji.

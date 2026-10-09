@@ -23,8 +23,9 @@
                    value="{{ $selectedDate }}" 
                    class="flex-1 px-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900">
             <button type="submit" 
-                    class="px-5 py-2.5 bg-slate-900 hover:bg-black text-white rounded-xl text-sm font-bold shadow-sm transition">
-                Cari
+                    class="px-5 py-2.5 bg-slate-900 hover:bg-black text-white rounded-xl text-sm font-bold shadow-sm transition inline-flex items-center space-x-1.5">
+                <x-app-icon name="actions.search" class="w-4 h-4 text-white" />
+                <span>Cari</span>
             </button>
         </form>
     </div>
@@ -79,7 +80,7 @@
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
             <h3 class="font-bold text-sm text-slate-900 flex items-center space-x-1.5">
-                <i data-lucide="list" class="w-4 h-4 text-slate-900"></i>
+                <x-app-icon name="types.calendar" class="w-4 h-4 text-slate-900" />
                 <span>Daftar Transaksi ({{ $mutations->count() }})</span>
             </h3>
         </div>
@@ -89,11 +90,11 @@
                 <div class="p-3.5 flex items-center justify-between hover:bg-slate-50 transition">
                     <div class="flex items-start space-x-3 min-w-0 pr-2">
                         <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-900 flex items-center justify-center shrink-0 mt-0.5">
-                            @if ($mutation['type'] === 'delivery') <i data-lucide="truck" class="w-4 h-4"></i>
-                            @elseif ($mutation['type'] === 'return') <i data-lucide="corner-up-left" class="w-4 h-4"></i>
-                            @elseif ($mutation['type'] === 'transfer') <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
-                            @elseif ($mutation['type'] === 'credit') <i data-lucide="file-text" class="w-4 h-4"></i>
-                            @else <i data-lucide="banknote" class="w-4 h-4"></i> @endif
+                            @if ($mutation['type'] === 'delivery') <x-app-icon name="types.truck" class="w-4 h-4" />
+                            @elseif ($mutation['type'] === 'return') <x-app-icon name="types.return" class="w-4 h-4" />
+                            @elseif ($mutation['type'] === 'transfer') <x-app-icon name="types.bank" class="w-4 h-4" />
+                            @elseif ($mutation['type'] === 'credit') <x-app-icon name="types.receipt" class="w-4 h-4" />
+                            @else <x-app-icon name="types.cash" class="w-4 h-4" /> @endif
                         </div>
                         <div class="min-w-0">
                             <p class="text-xs font-bold text-slate-900 truncate">{{ $mutation['title'] }}</p>
@@ -125,7 +126,7 @@
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
             <h3 class="font-bold text-sm text-slate-900 flex items-center space-x-1.5">
-                <i data-lucide="calendar" class="w-4 h-4 text-slate-900"></i>
+                <x-app-icon name="types.calendar" class="w-4 h-4 text-slate-900" />
                 <span>Riwayat Hari Sebelumnya</span>
             </h3>
         </div>

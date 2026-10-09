@@ -88,16 +88,16 @@
         </div>
     </div>
 
-    <!-- Dua Tombol Aksi Utama (Proporsional, Mudah Dipencet) -->
+    <!-- Dua Tombol Aksi Utama (Proporsional, Mudah Dipencet, Icon Lokal SVG) -->
     <div class="grid grid-cols-2 gap-3">
         <a href="{{ route('driver.transfer.create') }}" 
            class="flex items-center justify-center space-x-2 py-3.5 px-3 bg-slate-900 hover:bg-black active:scale-[0.99] text-white font-bold text-sm rounded-xl shadow-sm transition">
-            <i data-lucide="plus-circle" class="w-4 h-4 shrink-0"></i>
+            <x-app-icon name="actions.plus-circle" class="w-4 h-4 shrink-0 text-white" />
             <span>+ Catat Transfer</span>
         </a>
         <a href="{{ route('driver.credit.create') }}" 
            class="flex items-center justify-center space-x-2 py-3.5 px-3 bg-white hover:bg-slate-100 active:scale-[0.99] text-slate-900 font-bold text-sm rounded-xl shadow-sm transition border-2 border-slate-900">
-            <i data-lucide="file-plus" class="w-4 h-4 shrink-0"></i>
+            <x-app-icon name="actions.file-plus" class="w-4 h-4 shrink-0 text-slate-900" />
             <span>+ Catat Bon</span>
         </a>
     </div>
@@ -157,7 +157,7 @@
 
         @if ($todayTransfers->isEmpty() && $todayCredits->isEmpty())
             <div class="p-6 text-center text-slate-400 space-y-1">
-                <i data-lucide="inbox" class="w-8 h-8 mx-auto text-slate-300 mb-1"></i>
+                <x-app-icon name="types.inbox" class="w-8 h-8 mx-auto text-slate-300 mb-1" />
                 <p class="text-xs text-slate-500 font-medium">Belum ada catatan transfer atau bon hari ini.</p>
                 <p class="text-[11px] text-slate-400">Gunakan tombol di atas untuk mencatat pembayaran toko.</p>
             </div>
@@ -198,7 +198,7 @@
 
                                 @if ($tf->proof_image_path)
                                     <a href="{{ asset('storage/' . $tf->proof_image_path) }}" target="_blank" class="p-1 text-slate-600 hover:text-slate-900" title="Lihat Foto Bukti">
-                                        <i data-lucide="image" class="w-4 h-4"></i>
+                                        <x-app-icon name="actions.eye" class="w-4 h-4" />
                                     </a>
                                 @endif
                             </div>
@@ -228,7 +228,7 @@
                                 </span>
                                 @if ($cr->invoice_photo_path)
                                     <a href="{{ asset('storage/' . $cr->invoice_photo_path) }}" target="_blank" class="p-1 text-slate-600 hover:text-slate-900" title="Lihat Foto Faktur">
-                                        <i data-lucide="image" class="w-4 h-4"></i>
+                                        <x-app-icon name="actions.eye" class="w-4 h-4" />
                                     </a>
                                 @endif
                             </div>

@@ -23,9 +23,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -65,7 +62,7 @@
                 <button type="submit" 
                         class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition" 
                         title="Keluar dari sistem">
-                    <i data-lucide="log-out" class="w-4 h-4 text-slate-600"></i>
+                    <x-app-icon name="nav.logout" class="w-4 h-4 text-slate-600" />
                     <span>Keluar</span>
                 </button>
             </form>
@@ -78,7 +75,7 @@
         <!-- Pesan Berhasil -->
         @if (session('success'))
             <div class="mb-4 p-3.5 rounded-xl bg-white border-2 border-slate-900 text-slate-900 text-sm flex items-start space-x-2.5 shadow-sm">
-                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i>
+                <x-app-icon name="status.success" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div class="font-semibold flex-1">{{ session('success') }}</div>
             </div>
         @endif
@@ -86,7 +83,7 @@
         <!-- Pesan Peringatan / Error -->
         @if (session('error'))
             <div class="mb-4 p-3.5 rounded-xl bg-white border-2 border-rose-600 text-rose-900 text-sm flex items-start space-x-2.5 shadow-sm">
-                <i data-lucide="alert-circle" class="w-5 h-5 text-rose-600 shrink-0 mt-0.5"></i>
+                <x-app-icon name="status.danger" class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
                 <div class="font-semibold flex-1">{{ session('error') }}</div>
             </div>
         @endif
@@ -95,7 +92,7 @@
         @if ($errors->any())
             <div class="mb-4 p-3.5 rounded-xl bg-white border-2 border-rose-500 text-rose-900 text-sm space-y-1 shadow-sm">
                 <div class="font-bold flex items-center space-x-1.5">
-                    <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600"></i>
+                    <x-app-icon name="status.warning" class="w-4 h-4 text-rose-600" />
                     <span>Periksa kembali isian Anda:</span>
                 </div>
                 <ul class="list-disc list-inside text-rose-800 pl-1 space-y-0.5 font-medium text-xs">
@@ -109,45 +106,39 @@
         @yield('content')
     </main>
 
-    <!-- Navigasi Bawah Rapi & Mudah Dipencet -->
+    <!-- Navigasi Bawah Rapi & Mudah Dipencet (Menggunakan SVG Lokal) -->
     <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-md pb-safe">
         <div class="max-w-lg mx-auto px-4 h-16 flex items-center justify-between">
             <!-- Beranda -->
             <a href="{{ route('driver.dashboard') }}" 
                class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.dashboard') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
-                <i data-lucide="home" class="w-5 h-5 mb-0.5"></i>
+                <x-app-icon name="nav.home" class="w-5 h-5 mb-0.5" />
                 <span class="text-xs">Beranda</span>
             </a>
 
             <!-- + Transfer -->
             <a href="{{ route('driver.transfer.create') }}" 
                class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.transfer.*') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
-                <i data-lucide="credit-card" class="w-5 h-5 mb-0.5"></i>
+                <x-app-icon name="nav.transfer" class="w-5 h-5 mb-0.5" />
                 <span class="text-xs">+ Transfer</span>
             </a>
 
             <!-- + Kredit -->
             <a href="{{ route('driver.credit.create') }}" 
                class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.credit.*') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
-                <i data-lucide="file-text" class="w-5 h-5 mb-0.5"></i>
+                <x-app-icon name="nav.credit" class="w-5 h-5 mb-0.5" />
                 <span class="text-xs">+ Bon Kredit</span>
             </a>
 
             <!-- Riwayat -->
             <a href="{{ route('driver.history') }}" 
                class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.history') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
-                <i data-lucide="history" class="w-5 h-5 mb-0.5"></i>
+                <x-app-icon name="nav.history" class="w-5 h-5 mb-0.5" />
                 <span class="text-xs">Riwayat</span>
             </a>
         </div>
     </nav>
 
-    <!-- Inisialisasi Ikon Lucide -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-        });
-    </script>
     @stack('scripts')
 </body>
 </html>

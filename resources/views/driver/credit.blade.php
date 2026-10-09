@@ -10,7 +10,7 @@
         <a href="{{ route('driver.dashboard') }}" 
            class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition shadow-sm"
            title="Kembali ke Beranda">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <x-app-icon name="actions.arrow-left" class="w-5 h-5 text-slate-700" />
         </a>
         <div>
             <h2 class="text-base font-bold text-slate-900">Catat Faktur Bon / Kredit</h2>
@@ -20,7 +20,7 @@
 
     <!-- Pemberitahuan Singkat & Jelas -->
     <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-amber-900 text-xs flex items-center space-x-2.5">
-        <i data-lucide="info" class="w-4 h-4 text-amber-700 shrink-0"></i>
+        <x-app-icon name="status.info" class="w-4 h-4 text-amber-700 shrink-0" />
         <span><strong>Penting:</strong> Foto nota fisik bertanda tangan toko wajib dilampirkan.</span>
     </div>
 
@@ -92,7 +92,7 @@
 
                     <div id="uploadPlaceholder" class="space-y-2 py-2">
                         <div class="w-10 h-10 mx-auto rounded-full bg-slate-200 text-slate-800 flex items-center justify-center">
-                            <i data-lucide="camera" class="w-5 h-5"></i>
+                            <x-app-icon name="actions.camera" class="w-5 h-5 text-slate-800" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-slate-900">Ketuk untuk Ambil Foto Nota Fisik</p>
@@ -131,7 +131,7 @@
             <div class="pt-2">
                 <button type="submit" 
                         class="w-full py-3.5 px-4 bg-slate-900 hover:bg-black active:scale-[0.99] text-white font-bold text-sm rounded-xl shadow-sm flex items-center justify-center space-x-2 transition cursor-pointer">
-                    <i data-lucide="check-square" class="w-4 h-4"></i>
+                    <x-app-icon name="actions.check-square" class="w-4 h-4 text-white" />
                     <span>Simpan Faktur Bon</span>
                 </button>
             </div>
