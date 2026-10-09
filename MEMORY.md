@@ -131,7 +131,7 @@ Halaman: [`resources/views/filament/pages/daily-settlement-summary.blade.php`](f
   - Tipografi seimbang dengan `white-space: nowrap`, menjamin angka (`Rp 19.000.000` / `[KURANG] Rp 3.000.000`) tidak pernah patah ke baris kedua pada resolusi laptop (1366x768 & 1280x800).
 - **Tabel Rekapitulasi Sopir & Scroll Kontainer**:
   - Diberikan jarak pemisah yang nyaman (`margin-top: 1.5rem`) dari kartu ringkasan.
-  - Setiap sel tabel (`th` dan `td`) memiliki padding nyaman (`0.85rem 1rem`) dengan `white-space: nowrap !important` dan pembatas baris halus (`border-bottom: 1px solid #f1f5f9`).
+  - Setiap sel tabel (`th` dan `td`) memiliki padding nyaman (`0.85rem 1rem`) dengan `white-space: nowrap !important`, pembatas baris horizontal (`border-bottom`), dan **garis pemisah vertikal antar kolom (`border-right: 1px solid #e2e8f0`)** sehingga batas kolom angka sangat tegas, rapi, dan mudah dibaca.
   - Dilengkapi scrollbar horizontal elegan dan badge petunjuk visual interaktif: `↔ Geser tabel untuk kolom Status & Aksi`.
   - Kolom *Transfer Conf.* menampilkan badge pill rapi untuk pending (`+ Pnd: Rp ...`) dalam satu baris.
   - Kolom *Aksi Kasir* dilengkapi tombol input setor biru tebal dengan modal Livewire multi-setor yang aman dan teruji.
