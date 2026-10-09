@@ -47,6 +47,22 @@ class AdminPanelProvider extends PanelProvider
                     :is(.dark) .fi-ta-table td:not(:last-child) {
                         border-right: 1px solid #334155 !important;
                     }
+                    /* Tinggi baris seragam untuk seluruh tabel Filament */
+                    .fi-ta-table thead tr {
+                        height: 48px;
+                    }
+                    .fi-ta-table th {
+                        height: 48px;
+                        vertical-align: middle !important;
+                    }
+                    .fi-ta-table tbody tr {
+                        height: 52px;
+                    }
+                    .fi-ta-table td,
+                    .fi-ta-cell {
+                        height: 52px;
+                        vertical-align: middle !important;
+                    }
                 </style>'
             )
             ->navigationGroups([

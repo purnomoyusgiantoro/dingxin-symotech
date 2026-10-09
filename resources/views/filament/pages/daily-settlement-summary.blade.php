@@ -115,27 +115,38 @@
             border-spacing: 0;
             font-size: 0.8rem;
         }
+        .settlement-table thead tr {
+            height: 48px;
+        }
         .settlement-table th {
+            height: 48px;
             background: #f8fafc;
             color: #475569;
             font-size: 0.725rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            padding: 0.85rem 1rem !important;
+            padding: 0 1rem !important;
             white-space: nowrap !important;
             border-bottom: 1px solid #e2e8f0;
             border-right: 1px solid #e2e8f0;
+            vertical-align: middle;
+            box-sizing: border-box;
         }
         .settlement-table th:last-child {
             border-right: none;
         }
+        .settlement-table tbody tr {
+            height: 52px;
+        }
         .settlement-table td {
-            padding: 0.85rem 1rem !important;
+            height: 52px;
+            padding: 0 1rem !important;
             white-space: nowrap !important;
             border-bottom: 1px solid #f1f5f9;
             border-right: 1px solid #f1f5f9;
             vertical-align: middle;
+            box-sizing: border-box;
         }
         .settlement-table td:last-child {
             border-right: none;
@@ -143,12 +154,18 @@
         .settlement-table tbody tr:hover td {
             background-color: #f8fafc;
         }
+        .settlement-table tfoot tr {
+            height: 54px;
+        }
         .settlement-table tfoot td {
+            height: 54px;
             background-color: #f8fafc;
             border-top: 2px solid #cbd5e1;
             border-right: 1px solid #e2e8f0;
-            padding: 0.95rem 1rem !important;
+            padding: 0 1rem !important;
             white-space: nowrap !important;
+            vertical-align: middle;
+            box-sizing: border-box;
         }
         .settlement-table tfoot td:last-child {
             border-right: none;
@@ -361,12 +378,14 @@
                                     {{ $d['amount_returned'] > 0 ? '-' . number_format($d['amount_returned'], 0, ',', '.') : '0' }}
                                 </td>
                                 <td style="text-align: right; font-family: ui-monospace, monospace; color: #2563eb;">
-                                    <div style="font-weight: 600;">{{ number_format($d['transfer_approved'], 0, ',', '.') }}</div>
-                                    @if ($d['transfer_pending'] > 0)
-                                        <div style="font-size: 0.65rem; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; padding: 1px 5px; border-radius: 4px; display: inline-block; margin-top: 2px; white-space: nowrap; font-family: ui-sans-serif, sans-serif;" title="Menunggu verifikasi kasir">
-                                            + Pnd: {{ number_format($d['transfer_pending'], 0, ',', '.') }}
-                                        </div>
-                                    @endif
+                                    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.35rem;">
+                                        <span style="font-weight: 600;">{{ number_format($d['transfer_approved'], 0, ',', '.') }}</span>
+                                        @if ($d['transfer_pending'] > 0)
+                                            <span style="font-size: 0.65rem; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; padding: 1px 5px; border-radius: 4px; white-space: nowrap; font-family: ui-sans-serif, sans-serif;" title="Menunggu verifikasi kasir">
+                                                + Pnd: {{ number_format($d['transfer_pending'], 0, ',', '.') }}
+                                            </span>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td style="text-align: right; font-family: ui-monospace, monospace; color: #d97706;">
                                     {{ number_format($d['amount_credit'], 0, ',', '.') }}
@@ -385,13 +404,14 @@
                                                 <x-filament::icon icon="heroicon-m-eye" class="w-3.5 h-3.5" />
                                             </button>
                                         @endif
+                                        @if ($d['cash_deposits_count'] > 1)
+                                            <span style="font-size: 0.65rem; color: #059669; font-family: ui-sans-serif, sans-serif; cursor: pointer; background: #d1fae5; border: 1px solid #a7f3d0; padding: 1px 4px; border-radius: 4px; white-space: nowrap;"
+                                                  title="{{ $d['cash_deposits_count'] }}x setor bertahap"
+                                                  wire:click="openHistoryModal({{ $d['driver_id'] }}, '{{ addslashes($d['driver_name']) }} ({{ $d['driver_code'] }})')">
+                                                {{ $d['cash_deposits_count'] }}x
+                                            </span>
+                                        @endif
                                     </div>
-                                    @if ($d['cash_deposits_count'] > 1)
-                                        <div style="font-size: 0.65rem; color: #059669; font-family: ui-sans-serif, sans-serif; cursor: pointer; margin-top: 2px;"
-                                             wire:click="openHistoryModal({{ $d['driver_id'] }}, '{{ addslashes($d['driver_name']) }} ({{ $d['driver_code'] }})')">
-                                            ({{ $d['cash_deposits_count'] }}x setor)
-                                        </div>
-                                    @endif
                                 </td>
                                 <td style="text-align: right; font-family: ui-monospace, monospace; font-weight: 800; background-color: rgba(254, 243, 199, 0.4); color: {{ $d['selisih_setor'] > 0 ? '#e11d48' : ($d['selisih_setor'] < 0 ? '#0891b2' : '#059669') }};">
                                     @if ($d['selisih_setor'] > 0)
@@ -420,7 +440,7 @@
                                 <td style="text-align: center;">
                                     <button type="button" 
                                             wire:click="openDepositModal({{ $d['driver_id'] }}, '{{ addslashes($d['driver_name']) }} ({{ $d['driver_code'] }})')"
-                                            style="display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 700; background: #2563eb; color: #ffffff; border: none; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background 0.15s ease;"
+                                            style="display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem; height: 32px; padding: 0 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 700; background: #2563eb; color: #ffffff; border: none; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background 0.15s ease;"
                                             onmouseover="this.style.background='#1d4ed8'"
                                             onmouseout="this.style.background='#2563eb'">
                                         <x-filament::icon icon="heroicon-m-plus" class="w-3.5 h-3.5" />

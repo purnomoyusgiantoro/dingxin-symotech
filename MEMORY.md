@@ -142,12 +142,17 @@ Halaman: [`resources/views/filament/pages/daily-settlement-summary.blade.php`](f
 - **3 Kartu Ringkasan Eksekutif (Stats Overview)**:
   - Disusun menggunakan grid 3 kolom (`.settlement-overview-grid`) dengan struktur *Header (Judul + Ikon)* di baris atas dan *Angka Nilai Monospace* di baris bawah.
   - Tipografi seimbang dengan `white-space: nowrap`, menjamin angka (`Rp 19.000.000` / `[KURANG] Rp 3.000.000`) tidak pernah patah ke baris kedua pada resolusi laptop (1366x768 & 1280x800).
-- **Tabel Rekapitulasi Sopir & Scroll Kontainer**:
+- **Tabel Rekapitulasi Sopir & Standar Tinggi Baris Seragam (Uniform 52px Row Height)**:
   - Diberikan jarak pemisah yang nyaman (`margin-top: 1.5rem`) dari kartu ringkasan.
-  - Setiap sel tabel (`th` dan `td`) memiliki padding nyaman (`0.85rem 1rem`) dengan `white-space: nowrap !important`, pembatas baris horizontal (`border-bottom`), dan **garis pemisah vertikal antar kolom (`border-right: 1px solid #e2e8f0` / dark: `border-slate-700`)** sehingga batas kolom angka sangat tegas, rapi, dan mudah dibaca tanpa saling tumpang tindih.
+  - **Tinggi Baris Presisi & Seragam**:
+    - Header `thead tr / th`: tinggi pasti `48px`.
+    - Isi `tbody tr / td`: tinggi pasti **`52px`** seragam untuk seluruh baris, dengan konten rata tengah vertikal (`vertical-align: middle !important`). Tidak ada baris yang menciut atau menggelembung.
+    - Footer `tfoot tr / td`: tinggi pasti `54px` (Baris All Setor).
+    - Seluruh tabel bawaan Filament (`.fi-ta-table`) diinjeksi rule tinggi seragam serupa melalui `AdminPanelProvider` renderHook.
+  - Setiap sel tabel (`th` dan `td`) memiliki pembatas baris horizontal (`border-bottom`) dan **garis pemisah vertikal antar kolom (`border-right: 1px solid #e2e8f0` / dark: `border-slate-700`)** sehingga batas kolom angka sangat tegas, rapi, dan mudah dibaca tanpa saling tumpang tindih.
   - Dilengkapi scrollbar horizontal elegan dan badge petunjuk visual interaktif: `↔ Geser tabel untuk kolom Status & Aksi`.
-  - Kolom *Transfer Conf.* menampilkan badge pill rapi untuk pending (`+ Pnd: Rp ...`) dalam satu baris.
-  - Kolom *Aksi Kasir* dilengkapi tombol input setor biru tebal dengan modal Livewire multi-setor yang aman dan teruji.
+  - Kolom *Transfer Conf.* & *Sudah Setor* menampilkan badge pill rapi dalam satu baris sejajar flex (`+ Pnd: Rp ...` / `2x`), mempertahankan tinggi baris tetap 52px.
+  - Kolom *Aksi Kasir* dilengkapi tombol input setor biru tebal (tinggi pas 32px) dengan modal Livewire multi-setor yang aman dan teruji.
 
 ---
 
