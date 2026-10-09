@@ -125,12 +125,20 @@
             padding: 0.85rem 1rem !important;
             white-space: nowrap !important;
             border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+        }
+        .settlement-table th:last-child {
+            border-right: none;
         }
         .settlement-table td {
             padding: 0.85rem 1rem !important;
             white-space: nowrap !important;
             border-bottom: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
             vertical-align: middle;
+        }
+        .settlement-table td:last-child {
+            border-right: none;
         }
         .settlement-table tbody tr:hover td {
             background-color: #f8fafc;
@@ -138,8 +146,12 @@
         .settlement-table tfoot td {
             background-color: #f8fafc;
             border-top: 2px solid #cbd5e1;
+            border-right: 1px solid #e2e8f0;
             padding: 0.95rem 1rem !important;
             white-space: nowrap !important;
+        }
+        .settlement-table tfoot td:last-child {
+            border-right: none;
         }
 
         /* Dark Mode */
@@ -165,9 +177,11 @@
             background: #0f172a;
             color: #cbd5e1;
             border-bottom-color: #334155;
+            border-right-color: #334155;
         }
         :is(.dark) .settlement-table td {
             border-bottom-color: #334155;
+            border-right-color: #334155;
             color: #e2e8f0;
         }
         :is(.dark) .settlement-table tbody tr:hover td {
@@ -176,6 +190,7 @@
         :is(.dark) .settlement-table tfoot td {
             background-color: #0f172a;
             border-top-color: #475569;
+            border-right-color: #334155;
             color: #f8fafc;
         }
     </style>
@@ -555,11 +570,11 @@
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-gray-50 dark:bg-gray-900/60 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-bold uppercase">
-                                <th class="py-2.5 px-3">Tahap</th>
-                                <th class="py-2.5 px-3 text-right">Nominal (Rp)</th>
-                                <th class="py-2.5 px-3">Kasir Penerima</th>
-                                <th class="py-2.5 px-3">Catatan</th>
-                                <th class="py-2.5 px-3">Waktu Input</th>
+                                <th class="py-2.5 px-3 border-r border-gray-200 dark:border-gray-700">Tahap</th>
+                                <th class="py-2.5 px-3 text-right border-r border-gray-200 dark:border-gray-700">Nominal (Rp)</th>
+                                <th class="py-2.5 px-3 border-r border-gray-200 dark:border-gray-700">Kasir Penerima</th>
+                                <th class="py-2.5 px-3 border-r border-gray-200 dark:border-gray-700">Catatan</th>
+                                <th class="py-2.5 px-3 border-r border-gray-200 dark:border-gray-700">Waktu Input</th>
                                 @if(auth()->user()?->role === 'gm')
                                     <th class="py-2.5 px-3 text-center">Aksi GM</th>
                                 @endif
@@ -568,19 +583,19 @@
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                             @foreach ($deposits as $item)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                    <td class="py-2.5 px-3 font-semibold text-gray-900 dark:text-white">
+                                    <td class="py-2.5 px-3 font-semibold text-gray-900 dark:text-white border-r border-gray-200 dark:border-gray-700">
                                         Tahap {{ $item->deposit_phase }}
                                     </td>
-                                    <td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                                    <td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-600 dark:text-emerald-400 border-r border-gray-200 dark:border-gray-700">
                                         Rp {{ number_format($item->amount_received, 0, ',', '.') }}
                                     </td>
-                                    <td class="py-2.5 px-3 text-gray-700 dark:text-gray-300">
+                                    <td class="py-2.5 px-3 text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700">
                                         {{ $item->cashier?->name ?? 'Kasir' }}
                                     </td>
-                                    <td class="py-2.5 px-3 text-gray-500 dark:text-gray-400">
+                                    <td class="py-2.5 px-3 text-gray-500 dark:text-gray-400 border-r border-gray-200 dark:border-gray-700">
                                         {{ $item->notes ?? '-' }}
                                     </td>
-                                    <td class="py-2.5 px-3 text-gray-500 dark:text-gray-400 font-mono">
+                                    <td class="py-2.5 px-3 text-gray-500 dark:text-gray-400 font-mono border-r border-gray-200 dark:border-gray-700">
                                         {{ $item->created_at->format('H:i') }} WIB
                                     </td>
                                     @if(auth()->user()?->role === 'gm')
@@ -598,8 +613,8 @@
                         </tbody>
                         <tfoot>
                             <tr class="bg-gray-50 dark:bg-gray-900 font-bold border-t border-gray-200 dark:border-gray-700">
-                                <td class="py-2 px-3 text-gray-900 dark:text-white">Total Disetor</td>
-                                <td class="py-2 px-3 text-right font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
+                                <td class="py-2 px-3 text-gray-900 dark:text-white border-r border-gray-200 dark:border-gray-700">Total Disetor</td>
+                                <td class="py-2 px-3 text-right font-mono font-extrabold text-emerald-600 dark:text-emerald-400 border-r border-gray-200 dark:border-gray-700">
                                     Rp {{ number_format($deposits->sum('amount_received'), 0, ',', '.') }}
                                 </td>
                                 <td colspan="{{ auth()->user()?->role === 'gm' ? 4 : 3 }}"></td>

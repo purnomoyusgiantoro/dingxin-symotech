@@ -35,6 +35,20 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->maxContentWidth(MaxWidth::Full)
             ->sidebarCollapsibleOnDesktop()
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::HEAD_END,
+                fn (): string => '<style>
+                    /* Garis tengah pemisah vertikal untuk seluruh tabel Filament */
+                    .fi-ta-table th:not(:last-child),
+                    .fi-ta-table td:not(:last-child) {
+                        border-right: 1px solid #e2e8f0 !important;
+                    }
+                    :is(.dark) .fi-ta-table th:not(:last-child),
+                    :is(.dark) .fi-ta-table td:not(:last-child) {
+                        border-right: 1px solid #334155 !important;
+                    }
+                </style>'
+            )
             ->navigationGroups([
                 'Operasional Penjualan',
                 'Operasional Kasir',
