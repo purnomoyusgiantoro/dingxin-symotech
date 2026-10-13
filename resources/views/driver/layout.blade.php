@@ -52,14 +52,12 @@
             <div class="relative z-50 h-full flex items-center justify-end" id="profileDropdownContainer">
                 <button type="button" 
                         id="profileButton"
-                        class="relative w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-xs transition-all active:scale-95 cursor-pointer ring-2 ring-slate-200 hover:ring-slate-900 focus:outline-none"
+                        class="w-9 h-9 rounded-full bg-slate-900 hover:bg-black active:scale-95 text-white flex items-center justify-center shadow-xs transition-all cursor-pointer focus:outline-none"
                         aria-label="Menu Profil"
                         title="Profil Sopir & Keluar">
                     <svg class="w-4.5 h-4.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                    <!-- Status aktif online -->
-                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white"></span>
                 </button>
 
                 <!-- Dropdown Card Profil yang Elegan & Berkelas -->
