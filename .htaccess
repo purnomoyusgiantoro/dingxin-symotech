@@ -10,6 +10,7 @@
 </FilesMatch>
 
 Options -Indexes
+DirectoryIndex public/index.php index.php index.html
 
 # 2. Aktifkan UTF-8 dan MIME Types SVG/JSON
 AddDefaultCharset UTF-8
@@ -31,6 +32,7 @@ AddType application/json .json
 # 5. Redirect ke folder public/ jika DocumentRoot berada di root domain cPanel
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteRule ^$ public/index.php [L]
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
