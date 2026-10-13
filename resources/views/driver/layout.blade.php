@@ -37,32 +37,32 @@
 <body class="flex flex-col min-h-screen bg-slate-50 text-slate-900 antialiased">
 
     <!-- Header Bersih & Jelas -->
-    <header class="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm">
-        <div class="max-w-lg mx-auto px-4 h-15 py-2.5 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center font-bold text-white text-sm shadow-sm shrink-0">
-                    DX
-                </div>
-                <div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-base font-bold text-slate-900 tracking-tight">
+    <header class="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-xs">
+        <div class="max-w-lg mx-auto px-4 py-2 flex items-center justify-between">
+            <div class="flex items-center space-x-3 min-w-0">
+                <img src="{{ asset('images/dingxin_logo.png') }}" alt="Aice Dingxin" class="h-8 w-auto max-w-[90px] object-contain shrink-0">
+                <div class="min-w-0 leading-tight">
+                    <div class="flex items-center space-x-1.5 truncate">
+                        <span class="text-sm font-bold text-slate-900 truncate">
+                            {{ Auth::user()->name }}
+                        </span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono font-bold shrink-0">
                             {{ Auth::user()->driver->driver_code ?? Auth::user()->username }}
                         </span>
-                        <span class="text-xs px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-semibold border border-slate-200">
-                            Area {{ Auth::user()->driver->area_code ?? '-' }}
-                        </span>
                     </div>
-                    <p class="text-xs text-slate-500 truncate max-w-[180px] sm:max-w-xs">{{ Auth::user()->name }}</p>
+                    <p class="text-[11px] text-slate-500 font-medium truncate mt-0.5">
+                        Area {{ Auth::user()->driver->area_code ?? '-' }} &bull; Plat: {{ Auth::user()->driver->plate_number ?? '-' }}
+                    </p>
                 </div>
             </div>
 
             <!-- Tombol Keluar (Jelas dengan teks) -->
-            <form action="{{ route('driver.logout') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin keluar dari sistem?');">
+            <form action="{{ route('driver.logout') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin keluar dari sistem?');" class="shrink-0 pl-2">
                 @csrf
                 <button type="submit" 
-                        class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition" 
+                        class="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition cursor-pointer" 
                         title="Keluar dari sistem">
-                    <x-app-icon name="nav.logout" class="w-4 h-4 text-slate-600" />
+                    <x-app-icon name="nav.logout" class="w-3.5 h-3.5 text-slate-600" />
                     <span>Keluar</span>
                 </button>
             </form>
@@ -116,18 +116,18 @@
                 <span class="text-xs">Beranda</span>
             </a>
 
-            <!-- + Transfer -->
+            <!-- Transfer -->
             <a href="{{ route('driver.transfer.create') }}" 
                class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.transfer.*') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
                 <x-app-icon name="nav.transfer" class="w-5 h-5 mb-0.5" />
-                <span class="text-xs">+ Transfer</span>
+                <span class="text-xs">Transfer</span>
             </a>
 
-            <!-- + Kredit -->
+            <!-- Bon Kredit -->
             <a href="{{ route('driver.credit.create') }}" 
                class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.credit.*') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
                 <x-app-icon name="nav.credit" class="w-5 h-5 mb-0.5" />
-                <span class="text-xs">+ Bon Kredit</span>
+                <span class="text-xs">Bon Kredit</span>
             </a>
 
             <!-- Riwayat -->

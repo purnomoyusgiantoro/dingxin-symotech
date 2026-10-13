@@ -30,6 +30,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login(Login::class)
             ->brandName('Dingxin Symotech')
+            ->brandLogo(fn () => asset('images/dingxin_logo.png'))
+            ->brandLogoHeight('2.2rem')
             ->colors([
                 'primary' => Color::Blue,
             ])

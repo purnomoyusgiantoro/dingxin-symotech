@@ -5,26 +5,6 @@
 @section('content')
 <div class="space-y-4">
 
-    <!-- Kartu Identitas Sopir & Tanggal (Bersih & Elegan) -->
-    <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex items-center justify-between">
-        <div class="space-y-0.5">
-            <div class="flex items-center space-x-2">
-                <span class="text-lg font-bold text-slate-900 tracking-tight">{{ $driver->user->name }}</span>
-                <span class="text-xs px-2 py-0.5 rounded-md bg-slate-900 text-white font-mono font-bold">
-                    {{ $driver->driver_code }}
-                </span>
-            </div>
-            <p class="text-xs text-slate-500 font-medium">
-                {{ \Carbon\Carbon::parse($date)->translatedFormat('l, d F Y') }}
-            </p>
-        </div>
-        <div class="text-right">
-            <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-                Plat: {{ $driver->plate_number ?? '-' }}
-            </span>
-        </div>
-    </div>
-
     <!-- Kartu Utama: Sisa Uang Yang Harus Disetor -->
     @php
         $diff = $summary['difference'];
@@ -35,11 +15,14 @@
     @endphp
 
     <div class="rounded-2xl p-4 sm:p-5 bg-slate-900 text-white shadow-sm space-y-3.5">
-        <!-- Status Header -->
+        <!-- Status Header & Tanggal Operasional -->
         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Status Setoran Hari Ini
-            </span>
+            <div class="flex items-center space-x-1.5 text-slate-300">
+                <x-app-icon name="types.calendar" class="w-4 h-4 text-slate-400 shrink-0" />
+                <span class="text-xs font-semibold">
+                    {{ \Carbon\Carbon::parse($date)->translatedFormat('l, d F Y') }}
+                </span>
+            </div>
             <div>
                 @if ($isLunas)
                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500 text-white">
@@ -88,17 +71,17 @@
         </div>
     </div>
 
-    <!-- Dua Tombol Aksi Utama (Proporsional, Mudah Dipencet, Icon Lokal SVG) -->
+    <!-- Dua Tombol Aksi Utama (Tanpa tanda +) -->
     <div class="grid grid-cols-2 gap-3">
         <a href="{{ route('driver.transfer.create') }}" 
            class="flex items-center justify-center space-x-2 py-3.5 px-3 bg-slate-900 hover:bg-black active:scale-[0.99] text-white font-bold text-sm rounded-xl shadow-sm transition">
-            <x-app-icon name="actions.plus-circle" class="w-4 h-4 shrink-0 text-white" />
-            <span>+ Catat Transfer</span>
+            <x-app-icon name="nav.transfer" class="w-4 h-4 shrink-0 text-white" />
+            <span>Catat Transfer</span>
         </a>
         <a href="{{ route('driver.credit.create') }}" 
            class="flex items-center justify-center space-x-2 py-3.5 px-3 bg-white hover:bg-slate-100 active:scale-[0.99] text-slate-900 font-bold text-sm rounded-xl shadow-sm transition border-2 border-slate-900">
-            <x-app-icon name="actions.file-plus" class="w-4 h-4 shrink-0 text-slate-900" />
-            <span>+ Catat Bon</span>
+            <x-app-icon name="nav.credit" class="w-4 h-4 shrink-0 text-slate-900" />
+            <span>Catat Bon Kredit</span>
         </a>
     </div>
 
