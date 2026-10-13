@@ -1,0 +1,36 @@
+# ==========================================================
+# KONFIGURASI APACHE / LITESPEED UNTUK cPanel HOSTING
+# Proyek: Dingxin Multi Distribusi (dingxin.symotech.web.id)
+# ==========================================================
+
+# 1. Lindungi File Sensitif (.env, .git, .sql, .db, .sqlite, .log)
+<FilesMatch "(^\.|\.(env|sql|sqlite|db|log|yml|yaml|json|lock|md|git.*))$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+Options -Indexes
+
+# 2. Aktifkan UTF-8 dan MIME Types SVG/JSON
+AddDefaultCharset UTF-8
+AddType image/svg+xml .svg
+AddType application/json .json
+
+# 3. Gzip / Deflate Compression untuk Performa Cepat
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# 4. Keamanan Header Tambahan
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# 5. Redirect ke folder public/ jika DocumentRoot berada di root domain cPanel
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

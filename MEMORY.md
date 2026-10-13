@@ -175,4 +175,38 @@ php artisan storage:link
 uv run --with playwright python -u tests/E2E/test_master_web_e2e.py
 ```
 
+---
+
+## 🚀 Prosedur Deployment Produksi cPanel (`dingxin.symotech.web.id`)
+
+### 1. Berkas Paket Deployment Siap Pakai
+- **ZIP Aplikasi Mandiri**: [`dingxin.symotech.web.id.zip`](file:///D:/Documents/symotech_projek/dingxin_symotech/dingxin.symotech.web.id.zip) (20.17 MB)
+  - Berisi seluruh source code, vendor paket produksi, asset SVG, dan [.htaccess](file:///D:/Documents/symotech_projek/dingxin_symotech/.htaccess) root cPanel.
+  - Siap di-upload ke cPanel File Manager pada direktori root domain `dingxin.symotech.web.id/` dan di-extract langsung.
+- **Ekspor Basis Data MySQL**: [`database/dingxin_symotech_production.sql`](file:///D:/Documents/symotech_projek/dingxin_symotech/database/dingxin_symotech_production.sql) (54.6 KB)
+  - 16 tabel lengkap dengan relasi Foreign Key, index unik, dan 20 akun pengguna awal (GM, Kasir, Admin, 14 Sopir Armada TGL & BRS).
+  - Siap diimpor langsung via phpMyAdmin ke database MySQL cPanel (contoh: `symotec3_dingxin`).
+
+### 2. Konfigurasi Lingkungan (`.env`) di cPanel
+Salin [`.env.production.example`](file:///D:/Documents/symotech_projek/dingxin_symotech/.env.production.example) menjadi `.env` pada server cPanel:
+```dotenv
+APP_NAME="Dingxin Symotech"
+APP_ENV=production
+APP_KEY=base64:...
+APP_DEBUG=false
+APP_URL=https://dingxin.symotech.web.id
+
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_DATABASE=symotec3_dingxin
+DB_USERNAME=symotec3_dingxinuser
+DB_PASSWORD=••••••••••••
+```
+
+### 3. Otomasi CI/CD GitHub Actions
+- [`.github/workflows/deploy.yml`](file:///D:/Documents/symotech_projek/dingxin_symotech/.github/workflows/deploy.yml)
+- [`scripts/cpanel_deploy.py`](file:///D:/Documents/symotech_projek/dingxin_symotech/scripts/cpanel_deploy.py)
+- Secret terdaftar di GitHub: `CPANEL_FTP_SERVER`, `CPANEL_FTP_USERNAME`, `CPANEL_FTP_PASSWORD`.
+
+
 
