@@ -208,5 +208,21 @@ DB_PASSWORD=••••••••••••
 - [`scripts/cpanel_deploy.py`](file:///D:/Documents/symotech_projek/dingxin_symotech/scripts/cpanel_deploy.py)
 - Secret terdaftar di GitHub: `CPANEL_FTP_SERVER`, `CPANEL_FTP_USERNAME`, `CPANEL_FTP_PASSWORD`.
 
+---
+
+## 🎨 Standardisasi Identitas Visual & Redesign UI Portal Sopir
+
+Berdasarkan optimasi UX mobile-first dan brand identity resmi PT Dingxin Boga Indonesia (Distributor Resmi Aice):
+1. **Identitas Logo Resmi**:
+   - Berkas: [`public/images/dingxin_logo.png`](file:///D:/Documents/symotech_projek/dingxin_symotech/public/images/dingxin_logo.png) (Aice - Have An Aice Day, transparent vector PNG).
+   - Diimplementasikan pada header sticky driver (`layout.blade.php`) dan Filament Admin Panel (`AdminPanelProvider.php`).
+2. **Efisiensi Ruang Vertikal Header Sopir (Zero Space Wastage)**:
+   - Header dibuat sangat ringkas (tinggi ~50px) dengan menyatukan logo resmi, nama sopir, badge kode armada, area operasional, dan nomor plat kendaraan dalam satu baris sticky.
+   - Kartu identitas sopir terpisah yang sebelumnya mengulang informasi identitas telah dihapus sepenuhnya, sehingga metrik keuangan utama langsung terlihat seketika (*above the fold*) di layar ponsel tanpa perlu scroll.
+3. **Pembersihan Simbol `+`**:
+   - Seluruh awalan `+` pada tombol dan navigasi bawah dihapus total (`Transfer`, `Bon Kredit`, `Catat Transfer`, `Catat Bon Kredit`).
+   - Ikon diganti dengan SVG semantik lokal (`nav.transfer`, `nav.credit`, `types.calendar`).
+
+
 
 
