@@ -48,48 +48,68 @@
                 <img src="{{ asset('images/dingxin_logo.png') }}" alt="Aice Dingxin" class="h-7 sm:h-8 w-auto object-contain">
             </a>
 
-            <!-- Kanan: Logo Profile (Avatar) & Menu Keluar saat Diklik -->
-            <div class="relative z-20 h-full flex items-center justify-end" id="profileDropdownContainer">
+            <!-- Kanan: Logo Profile (Avatar Premium) & Menu Dropdown saat Diklik -->
+            <div class="relative z-50 h-full flex items-center justify-end" id="profileDropdownContainer">
                 <button type="button" 
                         id="profileButton"
-                        class="w-8.5 h-8.5 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 flex items-center justify-center shadow-xs transition cursor-pointer border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900"
+                        class="relative w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-xs transition-all active:scale-95 cursor-pointer ring-2 ring-slate-200 hover:ring-slate-900 focus:outline-none"
                         aria-label="Menu Profil"
-                        title="Profil & Keluar">
-                    <svg class="w-4 h-4 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        title="Profil Sopir & Keluar">
+                    <svg class="w-4.5 h-4.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
+                    <!-- Status aktif online -->
+                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white"></span>
                 </button>
 
-                <!-- Dropdown Menu (Muncul persis di bawah garis header ketika Logo Profile diklik) -->
+                <!-- Dropdown Card Profil yang Elegan & Berkelas -->
                 <div id="profileDropdown" 
-                     class="hidden absolute right-0 top-[calc(100%+6px)] w-56 bg-white rounded-2xl shadow-xl border border-slate-200 py-1.5 z-50 ring-1 ring-black/5">
-                    <div class="px-3.5 py-2.5 border-b border-slate-100">
-                        <p class="text-xs font-bold text-slate-900 truncate">{{ Auth::user()->name }}</p>
-                        <div class="flex items-center space-x-1.5 mt-1">
-                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono font-bold">
-                                {{ Auth::user()->driver->driver_code ?? Auth::user()->username }}
-                            </span>
-                            <span class="text-[10px] text-slate-600 font-medium">
-                                Area {{ Auth::user()->driver->area_code ?? '-' }}
-                            </span>
+                     class="hidden absolute right-0 top-[calc(100%+8px)] w-72 bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-4 z-50 animate-in fade-in zoom-in-95 duration-150">
+                    
+                    <!-- Header Akun Sopir -->
+                    <div class="flex items-start space-x-3 pb-3 border-b border-slate-100">
+                        <div class="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
+                            {{ strtoupper(substr(Auth::user()->driver->driver_code ?? Auth::user()->name, 0, 3)) }}
                         </div>
-                        @if(optional(Auth::user()->driver)->plate_number)
-                            <p class="text-[11px] text-slate-500 font-mono mt-1">Plat: {{ Auth::user()->driver->plate_number }}</p>
-                        @endif
+                        <div class="min-w-0 flex-1">
+                            <h4 class="text-sm font-bold text-slate-900 truncate">{{ Auth::user()->name }}</h4>
+                            <p class="text-[11px] text-slate-500 font-medium truncate mt-0.5">Sopir Distribusi Dingxin</p>
+                            <div class="flex items-center space-x-1.5 mt-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-slate-900 text-white text-[10px] font-mono font-bold">
+                                    {{ Auth::user()->driver->driver_code ?? Auth::user()->username }}
+                                </span>
+                                <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10px] font-semibold border border-slate-200">
+                                    Area {{ Auth::user()->driver->area_code ?? '-' }}
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="p-1.5">
-                        <form action="{{ route('driver.logout') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin keluar dari sistem?');">
-                            @csrf
-                            <button type="submit" 
-                                    class="w-full flex items-center space-x-2 px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 active:bg-rose-100 text-xs font-bold transition text-left cursor-pointer">
-                                <x-app-icon name="nav.logout" class="w-4 h-4 text-rose-600 shrink-0" />
-                                <span>Keluar dari Akun</span>
-                            </button>
-                        </form>
+                    <!-- Informasi Armada Kendaraan -->
+                    <div class="my-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <x-app-icon name="types.truck" class="w-4 h-4 text-slate-500" />
+                            <span class="text-xs text-slate-500 font-medium">Plat Armada:</span>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-slate-200">
+                            {{ Auth::user()->driver->plate_number ?? 'Belum Diatur' }}
+                        </span>
                     </div>
+
+                    <!-- Tombol Keluar Akun -->
+                    <form action="{{ route('driver.logout') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin keluar dari sistem?');">
+                        @csrf
+                        <button type="submit" 
+                                class="w-full flex items-center justify-center space-x-2 py-2.5 px-3 bg-rose-50 hover:bg-rose-100 active:bg-rose-200 text-rose-700 rounded-xl font-bold text-xs transition border border-rose-200 shadow-2xs cursor-pointer">
+                            <x-app-icon name="nav.logout" class="w-4 h-4 text-rose-600" />
+                            <span>Keluar dari Akun</span>
+                        </button>
+                    </form>
                 </div>
             </div>
+
+            <!-- Backdrop Gelap Halus saat Profil Terbuka -->
+            <div id="profileBackdrop" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-2xs z-40 transition-opacity"></div>
 
         </div>
     </header>
@@ -168,18 +188,27 @@
         document.addEventListener('DOMContentLoaded', function () {
             const btn = document.getElementById('profileButton');
             const dropdown = document.getElementById('profileDropdown');
-            const container = document.getElementById('profileDropdownContainer');
+            const backdrop = document.getElementById('profileBackdrop');
 
-            if (btn && dropdown && container) {
+            function toggleProfile(show) {
+                if (show) {
+                    dropdown.classList.remove('hidden');
+                    backdrop.classList.remove('hidden');
+                } else {
+                    dropdown.classList.add('hidden');
+                    backdrop.classList.add('hidden');
+                }
+            }
+
+            if (btn && dropdown && backdrop) {
                 btn.addEventListener('click', function (e) {
                     e.stopPropagation();
-                    dropdown.classList.toggle('hidden');
+                    const isHidden = dropdown.classList.contains('hidden');
+                    toggleProfile(isHidden);
                 });
 
-                document.addEventListener('click', function (e) {
-                    if (!container.contains(e.target)) {
-                        dropdown.classList.add('hidden');
-                    }
+                backdrop.addEventListener('click', function () {
+                    toggleProfile(false);
                 });
             }
         });
