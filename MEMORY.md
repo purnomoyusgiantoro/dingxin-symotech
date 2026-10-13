@@ -216,9 +216,11 @@ Berdasarkan optimasi UX mobile-first dan brand identity resmi PT Dingxin Boga In
 1. **Identitas Logo Resmi**:
    - Berkas: [`public/images/dingxin_logo.png`](file:///D:/Documents/symotech_projek/dingxin_symotech/public/images/dingxin_logo.png) (Aice - Have An Aice Day, transparent vector PNG).
    - Diimplementasikan pada header sticky driver (`layout.blade.php`) dan Filament Admin Panel (`AdminPanelProvider.php`).
-2. **Efisiensi Ruang Vertikal Header Sopir (Zero Space Wastage)**:
-   - Header dibuat sangat ringkas (tinggi ~50px) dengan menyatukan logo resmi, nama sopir, badge kode armada, area operasional, dan nomor plat kendaraan dalam satu baris sticky.
-   - Kartu identitas sopir terpisah yang sebelumnya mengulang informasi identitas telah dihapus sepenuhnya, sehingga metrik keuangan utama langsung terlihat seketika (*above the fold*) di layar ponsel tanpa perlu scroll.
+2. **Efisiensi Ruang Vertikal Header Sopir (Zero Space Wastage & Centered Branding)**:
+   - **Logo di Tengah**: Logo resmi Aice Dingxin diposisikan presisi di tengah header (`absolute left-1/2 -translate-x-1/2`).
+   - **Informasi Samping Dijadikan 1 Kesatuan**: Sisi kiri menyatukan identitas sopir secara ringkas (Nama sopir & kode armada & area) tanpa elemen terfragmentasi.
+   - **Logo Profile & Dropdown Keluar**: Sisi kanan dilengkapi tombol avatar profile (`#profileButton`) yang ketika diklik memunculkan menu dropdown profil lengkap (nama, kode armada, area, plat nomor) serta tombol aksi "Keluar dari Akun" (`route('driver.logout')`).
+   - Kartu identitas ganda sebelumnya dihapus total sehingga metrik keuangan harian langsung tampil di posisi teratas layar (*above the fold*).
 3. **Pembersihan Simbol `+`**:
    - Seluruh awalan `+` pada tombol dan navigasi bawah dihapus total (`Transfer`, `Bon Kredit`, `Catat Transfer`, `Catat Bon Kredit`).
    - Ikon diganti dengan SVG semantik lokal (`nav.transfer`, `nav.credit`, `types.calendar`).
