@@ -210,39 +210,188 @@
             border-right-color: #334155;
             color: #f8fafc;
         }
+
+        /* Filter Bar & Action Styling */
+        .filter-action-bar {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .filter-bar-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+        .filter-bar-icon-box {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.625rem;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid #dbeafe;
+        }
+        .filter-bar-controls {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .date-input-container {
+            display: inline-flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.625rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.15s ease;
+        }
+        .date-input-container:focus-within {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            background: #ffffff;
+        }
+        .date-native-input {
+            border: none !important;
+            background: transparent !important;
+            padding: 0.5rem 0.75rem !important;
+            font-size: 0.875rem !important;
+            font-weight: 600 !important;
+            color: #0f172a !important;
+            outline: none !important;
+            cursor: pointer;
+            min-height: 38px;
+        }
+        .btn-today-quick {
+            background: #f1f5f9;
+            border: none;
+            border-left: 1px solid #cbd5e1;
+            color: #334155;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.5rem 0.85rem;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+            white-space: nowrap;
+            min-height: 38px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .btn-today-quick:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        .btn-export-excel {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(180deg, #059669 0%, #047857 100%) !important;
+            color: #ffffff !important;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            padding: 0.55rem 1.15rem;
+            border-radius: 0.625rem;
+            border: 1px solid #047857 !important;
+            box-shadow: 0 1px 3px 0 rgba(4, 120, 87, 0.3) !important;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            min-height: 38px;
+        }
+        .btn-export-excel:hover {
+            background: linear-gradient(180deg, #047857 0%, #065f46 100%) !important;
+            box-shadow: 0 4px 6px -1px rgba(4, 120, 87, 0.4) !important;
+            transform: translateY(-1px);
+        }
+        .btn-export-excel:active {
+            transform: translateY(0);
+        }
+        .btn-export-excel svg {
+            width: 1rem;
+            height: 1rem;
+            fill: #ffffff;
+            stroke: none;
+        }
+
+        :is(.dark) .filter-action-bar {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        :is(.dark) .filter-bar-icon-box {
+            background: #0f172a;
+            border-color: #1e3a8a;
+            color: #60a5fa;
+        }
+        :is(.dark) .date-input-container {
+            background: #0f172a;
+            border-color: #475569;
+        }
+        :is(.dark) .date-native-input {
+            color: #f8fafc !important;
+        }
+        :is(.dark) .btn-today-quick {
+            background: #334155;
+            border-left-color: #475569;
+            color: #e2e8f0;
+        }
+        :is(.dark) .btn-today-quick:hover {
+            background: #475569;
+            color: #ffffff;
+        }
     </style>
 
     <div class="space-y-6">
 
         <!-- Bar Kontrol & Filter Tanggal -->
-        <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="p-2 rounded-lg bg-primary-50 dark:bg-primary-950 text-primary-600 dark:text-primary-400">
-                    <x-filament::icon icon="heroicon-o-calendar-days" class="w-6 h-6" />
+        <div class="filter-action-bar">
+            <div class="filter-bar-title-wrap">
+                <div class="filter-bar-icon-box">
+                    <x-filament::icon icon="heroicon-o-calendar-days" class="w-5 h-5" style="width: 20px; height: 20px;" />
                 </div>
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Pilih Tanggal Operasional</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Menampilkan rekapitulasi setoran armada harian</p>
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white">Pilih Tanggal Operasional</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Rekapitulasi setoran seluruh armada hari terpilih</p>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-3">
-                <input type="date" 
-                       wire:model.live="selectedDate" 
-                       class="px-3 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition" />
+            <div class="filter-bar-controls">
+                <!-- Group Tanggal & Tombol Hari Ini Terpadu -->
+                <div class="date-input-container">
+                    <input type="date" 
+                           wire:model.live="selectedDate" 
+                           class="date-native-input" />
 
-                <button type="button" 
-                        wire:click="$set('selectedDate', '{{ now()->format('Y-m-d') }}')" 
-                        class="px-3 py-2 text-xs font-medium rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition">
-                    Hari Ini
-                </button>
+                    <button type="button" 
+                            wire:click="$set('selectedDate', '{{ now()->format('Y-m-d') }}')" 
+                            class="btn-today-quick"
+                            title="Set tanggal ke hari ini">
+                        Hari Ini
+                    </button>
+                </div>
 
+                <!-- Tombol Export Excel Berdiri Mandiri -->
                 @if(in_array(auth()->user()?->role, ['gm', 'cashier']))
                     <button type="button" 
                             wire:click="exportExcel" 
-                            class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
-                        <x-filament::icon icon="heroicon-m-arrow-down-tray" class="w-4 h-4" />
-                        Export Excel
+                            class="btn-export-excel"
+                            title="Unduh laporan rekapitulasi ke format Excel">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width: 16px; height: 16px; min-width: 16px; flex-shrink: 0; display: inline-block;">
+                            <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
+                            <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
+                        </svg>
+                        <span>Export Excel (.xlsx)</span>
                     </button>
                 @endif
             </div>
