@@ -218,7 +218,7 @@ Berdasarkan optimasi UX mobile-first dan brand identity resmi PT Dingxin Boga In
    - Diimplementasikan pada header sticky driver (`layout.blade.php`) dan Filament Admin Panel (`AdminPanelProvider.php`).
 2. **Efisiensi Ruang Vertikal Header Sopir (Zero Space Wastage & Centered Branding)**:
    - **Logo di Tengah**: Logo resmi Aice Dingxin diposisikan presisi di tengah header (`absolute left-1/2 -translate-x-1/2`).
-   - **Informasi Samping Dijadikan 1 Kesatuan**: Sisi kiri menyatukan identitas sopir secara ringkas (Nama sopir & kode armada & area) tanpa elemen terfragmentasi.
+   - **Header Minimalis Tanpa Duplikasi**: Teks identitas sopir di sisi kiri header dihilangkan sepenuhnya demi estetika bersih dan simetris, karena informasi identitas telah terpusat di menu profil.
    - **Logo Profile & Dropdown Keluar**: Sisi kanan dilengkapi tombol avatar profile (`#profileButton`) yang ketika diklik memunculkan menu dropdown profil lengkap (nama, kode armada, area, plat nomor) serta tombol aksi "Keluar dari Akun" (`route('driver.logout')`).
    - Kartu identitas ganda sebelumnya dihapus total sehingga metrik keuangan harian langsung tampil di posisi teratas layar (*above the fold*).
 3. **Pembersihan Simbol `+`**:
