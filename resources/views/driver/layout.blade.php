@@ -40,18 +40,8 @@
     <header class="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-xs">
         <div class="max-w-lg mx-auto px-4 h-14 relative flex items-center justify-between">
             
-            <!-- Kiri: Informasi Sopir (Dijadikan 1 Kesatuan Rapi & Ringkas) -->
-            <div class="flex items-center min-w-0 max-w-[38%] sm:max-w-[42%] z-10">
-                <div class="leading-tight truncate">
-                    <span class="text-xs sm:text-sm font-bold text-slate-900 truncate block">
-                        {{ Auth::user()->name }}
-                    </span>
-                    <p class="text-[10px] sm:text-[11px] text-slate-500 font-medium truncate mt-0.5">
-                        <span class="font-mono font-bold text-slate-700">{{ Auth::user()->driver->driver_code ?? Auth::user()->username }}</span>
-                        &bull; Area {{ Auth::user()->driver->area_code ?? '-' }}
-                    </p>
-                </div>
-            </div>
+            <!-- Kiri: Spacer Penyeimbang agar Logo tetap presisi di tengah -->
+            <div class="w-8.5 h-8.5 shrink-0"></div>
 
             <!-- Tengah: Logo Resmi Aice / Dingxin (Tepat di Tengah Header) -->
             <a href="{{ route('driver.dashboard') }}" class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center shrink-0 z-10" title="Beranda Sopir">
