@@ -36,27 +36,31 @@
 </head>
 <body class="flex flex-col min-h-screen bg-slate-50 text-slate-900 antialiased">
 
-    <!-- Header Bersih & Jelas (Logo di Tengah, Info di Samping, Logo Profile dengan Menu Keluar) -->
-    <header class="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-xs">
-        <div class="max-w-lg mx-auto px-4 h-14 relative flex items-center justify-between">
+    <!-- Header Bersih & Jelas (Brand Group di Kiri, Pill Profil Kompak di Kanan) -->
+    <header class="sticky top-0 z-30 bg-white border-b border-slate-200/80 shadow-xs">
+        <div class="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
             
-            <!-- Kiri: Spacer Penyeimbang agar Logo tetap presisi di tengah -->
-            <div class="w-8.5 h-8.5 shrink-0"></div>
+            <!-- Kiri: Brand Group (Logo Aice Dingxin + Tag Driver Ops) -->
+            <div class="flex items-center space-x-2">
+                <a href="{{ route('driver.dashboard') }}" class="flex items-center space-x-2 shrink-0" title="Beranda Sopir">
+                    <img src="{{ asset('images/dingxin_logo.png') }}" alt="Aice Dingxin" class="h-7 sm:h-8 w-auto object-contain">
+                    <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded tracking-wider uppercase border border-blue-100">Driver Ops</span>
+                </a>
+            </div>
 
-            <!-- Tengah: Logo Resmi Aice / Dingxin (Tepat di Tengah Header) -->
-            <a href="{{ route('driver.dashboard') }}" class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center shrink-0 z-10" title="Beranda Sopir">
-                <img src="{{ asset('images/dingxin_logo.png') }}" alt="Aice Dingxin" class="h-7 sm:h-8 w-auto object-contain">
-            </a>
-
-            <!-- Kanan: Logo Profile (Avatar Premium) & Menu Dropdown saat Diklik -->
-            <div class="relative z-50 h-full flex items-center justify-end" id="profileDropdownContainer">
+            <!-- Kanan: Driver Pill Kompak & Menu Profil Dropdown -->
+            <div class="relative z-50 flex items-center justify-end" id="profileDropdownContainer">
                 <button type="button" 
                         id="profileButton"
-                        class="w-9 h-9 rounded-full bg-slate-900 hover:bg-black active:scale-95 text-white flex items-center justify-center shadow-xs transition-all cursor-pointer focus:outline-none"
+                        class="flex items-center space-x-1.5 bg-slate-50 hover:bg-slate-100 active:scale-95 text-slate-800 py-1 pl-1 pr-2.5 rounded-full border border-slate-200 shadow-2xs transition-all cursor-pointer focus:outline-none"
                         aria-label="Menu Profil"
                         title="Profil Sopir & Keluar">
-                    <svg class="w-4.5 h-4.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    <div class="w-6 h-6 rounded-full bg-slate-900 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                        {{ strtoupper(substr(Auth::user()->driver->driver_code ?? Auth::user()->name, 0, 3)) }}
+                    </div>
+                    <span class="text-xs font-bold text-slate-800 truncate max-w-[100px]">{{ Auth::user()->driver->driver_code ?? Auth::user()->name }}</span>
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
 
@@ -149,33 +153,26 @@
         @yield('content')
     </main>
 
-    <!-- Navigasi Bawah Rapi & Mudah Dipencet (Menggunakan SVG Lokal) -->
+    <!-- Navigasi Bawah Terpadu 3 Menu (Beranda, Catat Setoran, Riwayat) -->
     <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-md pb-safe">
-        <div class="max-w-lg mx-auto px-4 h-16 flex items-center justify-between">
-            <!-- Beranda -->
+        <div class="max-w-lg mx-auto px-4 h-16 grid grid-cols-3 items-center">
+            <!-- 1. Beranda -->
             <a href="{{ route('driver.dashboard') }}" 
-               class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.dashboard') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
+               class="flex flex-col items-center justify-center py-1 transition relative {{ request()->routeIs('driver.dashboard') ? 'text-slate-900 font-bold before:absolute before:top-0 before:w-8 before:h-0.5 before:bg-slate-900 before:rounded-b' : 'text-slate-400 hover:text-slate-700 font-medium' }}">
                 <x-app-icon name="nav.home" class="w-5 h-5 mb-0.5" />
                 <span class="text-xs">Beranda</span>
             </a>
 
-            <!-- Transfer -->
+            <!-- 2. Catat Setoran (Satu Tab Terpadu) -->
             <a href="{{ route('driver.transfer.create') }}" 
-               class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.transfer.*') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
+               class="flex flex-col items-center justify-center py-1 transition relative {{ (request()->routeIs('driver.transfer.*') || request()->routeIs('driver.credit.*')) ? 'text-slate-900 font-bold before:absolute before:top-0 before:w-8 before:h-0.5 before:bg-slate-900 before:rounded-b' : 'text-slate-400 hover:text-slate-700 font-medium' }}">
                 <x-app-icon name="nav.transfer" class="w-5 h-5 mb-0.5" />
-                <span class="text-xs">Transfer</span>
+                <span class="text-xs">Catat Setoran</span>
             </a>
 
-            <!-- Bon Kredit -->
-            <a href="{{ route('driver.credit.create') }}" 
-               class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.credit.*') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
-                <x-app-icon name="nav.credit" class="w-5 h-5 mb-0.5" />
-                <span class="text-xs">Bon Kredit</span>
-            </a>
-
-            <!-- Riwayat -->
+            <!-- 3. Riwayat -->
             <a href="{{ route('driver.history') }}" 
-               class="flex flex-col items-center justify-center flex-1 py-1 transition {{ request()->routeIs('driver.history') ? 'text-slate-900 font-bold' : 'text-slate-500 hover:text-slate-900 font-medium' }}">
+               class="flex flex-col items-center justify-center py-1 transition relative {{ request()->routeIs('driver.history') ? 'text-slate-900 font-bold before:absolute before:top-0 before:w-8 before:h-0.5 before:bg-slate-900 before:rounded-b' : 'text-slate-400 hover:text-slate-700 font-medium' }}">
                 <x-app-icon name="nav.history" class="w-5 h-5 mb-0.5" />
                 <span class="text-xs">Riwayat</span>
             </a>

@@ -210,20 +210,34 @@ DB_PASSWORD=••••••••••••
 
 ---
 
-## 🎨 Standardisasi Identitas Visual & Redesign UI Portal Sopir
+## 🎨 Standardisasi Identitas Visual & Clean Fintech Redesign Portal Sopir
 
 Berdasarkan optimasi UX mobile-first dan brand identity resmi PT Dingxin Boga Indonesia (Distributor Resmi Aice):
-1. **Identitas Logo Resmi**:
-   - Berkas: [`public/images/dingxin_logo.png`](file:///D:/Documents/symotech_projek/dingxin_symotech/public/images/dingxin_logo.png) (Aice - Have An Aice Day, transparent vector PNG).
-   - Diimplementasikan pada header sticky driver (`layout.blade.php`) dan Filament Admin Panel (`AdminPanelProvider.php`).
-2. **Efisiensi Ruang Vertikal Header Sopir (Zero Space Wastage & Centered Branding)**:
-   - **Logo di Tengah**: Logo resmi Aice Dingxin diposisikan presisi di tengah header (`absolute left-1/2 -translate-x-1/2`).
-   - **Header Minimalis Tanpa Duplikasi**: Teks identitas sopir di sisi kiri header dihilangkan sepenuhnya demi estetika bersih dan simetris, karena informasi identitas telah terpusat di menu profil.
-   - **Finishing Profile Drawer & Backdrop Overlay**: Tombol avatar profile di sudut kanan atas menggunakan lingkaran bulat warna hitam solid (`w-9 h-9 rounded-full bg-slate-900 hover:bg-black`) dengan ikon profil putih yang kontras dan bersih, tanpa status dot warna hijau. Saat diklik, kartu profil modal modern terbuka dengan efek backdrop overlay gelap halus (`backdrop-blur-2xs`), menampilkan inisial avatar (`TGL`), nama sopir, badge kode armada & area, plat nomor kendaraan berikon truk, dan tombol aksi "Keluar dari Akun" berbingkai merah (`route('driver.logout')`).
-   - Kartu identitas ganda sebelumnya dihapus total sehingga metrik keuangan harian langsung tampil di posisi teratas layar (*above the fold*).
-3. **Pembersihan Simbol `+`**:
-   - Seluruh awalan `+` pada tombol dan navigasi bawah dihapus total (`Transfer`, `Bon Kredit`, `Catat Transfer`, `Catat Bon Kredit`).
-   - Ikon diganti dengan SVG semantik lokal (`nav.transfer`, `nav.credit`, `types.calendar`).
+1. **Identitas Logo & Header Kompak**:
+   - Berkas: [`public/images/dingxin_logo.png`](file:///D:/Documents/symotech_projek/dingxin_symotech/public/images/dingxin_logo.png) (Aice - Have An Aice Day).
+   - **Kiri**: Brand Group memuat logo Aice Dingxin dan badge pill `Driver Ops` berbingkai biru halus.
+   - **Kanan**: Driver Pill kompak (`BS • Budi S.` / `TGL1.2`) yang langsung memperlihatkan identitas sopir tanpa memakan ruang konten, membuka menu profil/drawer lengkap (plat armada, area, dan tombol keluar akun) saat diklik.
+2. **Navigasi Bawah Terpadu 3 Menu (Thumb-Friendly Bottom Nav)**:
+   - Dirampingkan dari 4 menu menjadi **3 menu terpadu**: `Beranda`, `Catat Setoran`, dan `Riwayat`.
+   - Dilengkapi garis indikator aktif di bagian atas tab (`before:absolute before:top-0 before:w-8 before:h-0.5 before:bg-slate-900 before:rounded-b`).
+3. **Beranda Bebas Duplikasi & Rincian Struk (Receipt List)**:
+   - **Hero Settlement Card**: Gradien slate modern (`#0F172A` ke `#1E293B`) dengan aksen radial glow, status badge pill, nominal sisa wajib setor, **progress bar pelunasan visual**, dan 2 kolom metrik (Total Wajib Setor & Sudah Tercatat/Sah).
+   - **Pembersihan Tombol Duplikat**: 2 tombol raksasa di tengah beranda dihapus total, menghemat >120px ruang vertikal layar HP.
+   - **Rincian Operasional Bergaya Struk**: Menggantikan 4 kotak abu-abu besar dengan daftar vertikal hemat ruang bergaris putus-putus dan indikator dot warna (Barang Dibawa, Barang Retur, Transfer Sah, Nota Bon) serta pill Net Bawaan.
+   - **Catatan Hari Ini & Empty State Kontekstual**: Daftar mutasi bergaya fintech dengan ikon semantik berlatar lembut dan tautan inspeksi foto, disertai empty state ramah dengan tombol aksi cepat (`+ Catat Transfer` & `+ Catat Bon`).
+4. **Catat Setoran Terpadu (Segmented Toggle & Quick Chips)**:
+   - Segmented control di atas formulir (`Transfer Toko` vs `Bon / Kredit`) menghubungkan formulir transfer dan bon kredit secara mulus tanpa scroll panjang.
+   - **Quick Nominal Chips**: Tombol cepat nominal (`500 Rb`, `1 Jt`, `2,5 Jt`, `5 Jt`) otomatis mengisi input dan sinkron dengan format Rupiah.
+   - **Integrated Upload Box**: Kotak upload modern dengan preview foto instan; untuk faktur bon, peringatan wajib nota fisik dan cap toko diintegrasikan langsung ke dalam box upload (*required-zone*).
+5. **Riwayat Akordion Interaktif (Expandable Timeline)**:
+   - Menggantikan 4 kartu terpisah dengan daftar akordion interaktif yang bisa dibuka-tutup di tempat.
+   - Filter pill instan (`Semua`, `Kurang`, `Lunas`) untuk memindai status harian secara cepat tanpa reload halaman.
+   - Kotak rincian 3 metrik (Wajib Setor, Disetor Kasir, Selisih) dan daftar mutasi langsung tampil di dalam kartu tanggal yang dibuka.
+6. **Zero-Regression Guarantee & Automated Verification**:
+   - Seluruh kontrak formulir (`#transferForm`, `#creditForm`, `#claimed_amount_display`, `#claimed_amount`, `#amount_display`, `#amount`, `name="proof_image"`, `name="invoice_photo"`, `name="notes"`) dipertahankan 100%.
+   - **PHPUnit Feature Tests**: 25/25 PASS (150 assertions).
+   - **Playwright Browser E2E Master Tests**: 20/20 PASS (100% lolos lintas Admin, Sopir TGL1.2, Kasir, GM, dan Security Guards).
+
 
 
 
