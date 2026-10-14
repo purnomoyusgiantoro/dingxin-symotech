@@ -24,7 +24,7 @@ jobs:
         run: composer install --prefer-dist --no-interaction
 
       - name: 🧪 Run PHPUnit Test Suite
-        run: php artisan test --bail
+        run: php artisan test
 
   deploy:
     name: 🚀 Deploy ke cPanel
