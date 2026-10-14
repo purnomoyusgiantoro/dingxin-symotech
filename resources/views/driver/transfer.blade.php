@@ -7,10 +7,7 @@
 
     <!-- Header Judul & Tanggal -->
     <div class="flex items-center justify-between">
-        <div>
-            <h2 class="text-base font-bold text-slate-900">Catat Setoran</h2>
-            <p class="text-xs text-slate-500">Kirim laporan bukti transfer atau nota bon</p>
-        </div>
+        <h2 class="text-base font-bold text-slate-900">Catat Setoran</h2>
         <div class="text-xs font-semibold text-slate-600 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-2xs">
             {{ \Carbon\Carbon::parse($todayDate)->translatedFormat('d M Y') }}
         </div>
