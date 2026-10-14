@@ -23,6 +23,11 @@ jobs:
       - name: 📦 Install Composer Dependencies
         run: composer install --prefer-dist --no-interaction
 
+      - name: 🔑 Setup App Key
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
       - name: 🧪 Run PHPUnit Test Suite
         run: php artisan test
 
