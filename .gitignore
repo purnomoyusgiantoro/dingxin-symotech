@@ -18,3 +18,5 @@ yarn-error.log
 /.idea
 /.vscode
 *.zip
+tests/E2E/screenshots/
+
