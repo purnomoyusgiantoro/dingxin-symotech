@@ -23,7 +23,7 @@ Route::post('/driver/logout', [DriverAuthController::class, 'logout'])->name('dr
 Route::post('/logout', [DriverAuthController::class, 'logout'])->name('logout');
 
 // Driver Portal (Diproteksi DriverSessionGuard)
-Route::middleware(['web', 'driver.guard'])->prefix('driver')->name('driver.')->group(function () {
+Route::middleware(['driver.guard'])->prefix('driver')->name('driver.')->group(function () {
     // Dashboard & Settlement Harian
     Route::get('/', [DriverPortalController::class, 'dashboard'])->name('dashboard');
 

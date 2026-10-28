@@ -7,6 +7,7 @@ use App\Models\User;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
@@ -17,6 +18,21 @@ use Illuminate\Validation\ValidationException;
 
 class Login extends BaseLogin
 {
+    public function mount(): void
+    {
+        if (Filament::auth()->check()) {
+            $user = Filament::auth()->user();
+            if ($user && $user->role === 'driver') {
+                redirect()->route('driver.dashboard');
+                return;
+            }
+            redirect()->intended(Filament::getUrl());
+            return;
+        }
+
+        $this->form->fill();
+    }
+
     public function hasLogo(): bool
     {
         return false;
@@ -47,6 +63,13 @@ class Login extends BaseLogin
             ->autocomplete()
             ->autofocus()
             ->extraInputAttributes(['tabindex' => 1]);
+    }
+
+    protected function getRememberFormComponent(): Component
+    {
+        return Checkbox::make('remember')
+            ->label('Ingat saya di perangkat ini')
+            ->default(true);
     }
 
     protected function getCredentialsFromFormData(array $data): array

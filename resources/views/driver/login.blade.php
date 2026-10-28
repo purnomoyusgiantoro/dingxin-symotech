@@ -82,6 +82,19 @@
                            class="w-full px-3.5 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition">
                 </div>
 
+                <!-- Ingat Saya (Persistent Cookie Session) -->
+                <div class="flex items-center justify-between pt-1">
+                    <label for="remember" class="flex items-center space-x-2.5 cursor-pointer select-none">
+                        <input type="checkbox" 
+                               id="remember" 
+                               name="remember" 
+                               value="1" 
+                               checked 
+                               class="w-4 h-4 rounded text-slate-900 border-slate-300 focus:ring-slate-900 focus:ring-offset-0 transition cursor-pointer">
+                        <span class="text-xs font-medium text-slate-600">Ingat saya di perangkat ini</span>
+                    </label>
+                </div>
+
                 <!-- Tombol Masuk -->
                 <div class="pt-1">
                     <button type="submit" 

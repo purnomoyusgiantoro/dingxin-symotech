@@ -92,6 +92,13 @@ Tersedia tombol download template Excel resmi langsung pada action panel `DailyD
    - Mendukung username huruf besar/kecil (`tgl1.2` atau `TGL1.2`).
    - Mendukung login menggunakan email atau kode armada.
    - Shortcut alias: mengetik `sopir` otomatis mengarahkan ke akun armada `TGL1.2`.
+4. **Sesi Cookie Persistent (Remember Me)**:
+   - Checkbox *"Ingat saya di perangkat ini"* tersedia di login desktop Filament (`App\Filament\Pages\Auth\Login`) dan portal driver (`resources/views/driver/login.blade.php`), aktif secara default (`default(true)`).
+   - Menerbitkan cookie terenkripsi `remember_web_*` berdurasi jangka panjang dengan flag `HttpOnly = true` dan `SameSite = Lax` untuk mitigasi serangan XSS dan CSRF.
+   - **Bypass Redirection Guard**: Pada `Login::mount()`, user dengan role driver yang memiliki cookie remember langsung diarahkan ke `route('driver.dashboard')` tanpa tersangkut error `403 Forbidden` di panel admin Filament.
+   - **Invalidasi Token Saat Logout**: Method `DriverAuthController::logout()` secara proaktif merotasi `remember_token` di database (`Str::random(60)`) untuk mencegah serangan token replay.
+   - **Perlindungan Session Fixation & Akun Nonaktif**: Session ID di-regenerate saat login, dan akun berstatus `is_active = false` langsung ditolak dan dipaksa logout meskipun membawa cookie remember valid.
+   - Seluruh audit keamanan diuji secara otomatis pada test suite `Tests\Feature\AuthSecurityAndRememberMeTest` (8/8 skenario lolos).
 
 ---
 

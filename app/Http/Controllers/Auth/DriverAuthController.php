@@ -77,8 +77,8 @@ class DriverAuthController extends Controller
             ]);
         }
 
-        // Login ke session
-        Auth::login($user, $request->boolean('remember'));
+        // Login ke session dengan dukungan persistent cookie (Remember Me)
+        Auth::login($user, $request->has('remember') ? $request->boolean('remember') : true);
         $request->session()->regenerate();
 
         // Role-based redirection
@@ -100,10 +100,16 @@ class DriverAuthController extends Controller
     }
 
     /**
-     * Handle user logout.
+     * Handle user logout with remember_token revocation to prevent replay attacks.
      */
     public function logout(Request $request): RedirectResponse
     {
+        $user = Auth::user();
+        if ($user) {
+            $user->setRememberToken(\Illuminate\Support\Str::random(60));
+            $user->save();
+        }
+
         Auth::logout();
 
         $request->session()->invalidate();
